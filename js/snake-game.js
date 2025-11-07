@@ -1,3 +1,4 @@
+
 // snake-game.js - Classic Snake Game Implementation
 class SnakeGame {
     constructor(canvasId, scoreId, highScoreId) {
@@ -6,9 +7,10 @@ class SnakeGame {
         this.scoreElement = document.getElementById(scoreId);
         this.highScoreElement = document.getElementById(highScoreId);
         
-        // Game settings
+        // Game settings - SLOWER SPEED
         this.gridSize = 20;
         this.tileCount = this.canvas.width / this.gridSize;
+        this.gameSpeed = 150; // Increased from 100ms to 150ms (slower)
         
         // Game state
         this.snake = [{ x: 10, y: 10 }];
@@ -61,7 +63,7 @@ class SnakeGame {
         this.gameLoop = setInterval(() => {
             this.update();
             this.draw();
-        }, 100);
+        }, this.gameSpeed); // Use the configurable game speed
         
         console.log('Snake game started');
     }
@@ -73,7 +75,7 @@ class SnakeGame {
             this.gameLoop = setInterval(() => {
                 this.update();
                 this.draw();
-            }, 100);
+            }, this.gameSpeed);
             console.log('Snake game resumed');
         } else {
             clearInterval(this.gameLoop);
@@ -100,8 +102,14 @@ class SnakeGame {
         // Calculate new head position
         const head = { x: this.snake[0].x + this.dx, y: this.snake[0].y + this.dy };
         
-        // Game over conditions
-        if (this.isWallCollision(head) || this.isSelfCollision(head)) {
+        // WRAP AROUND THE SCREEN INSTEAD OF WALL COLLISION
+        if (head.x < 0) head.x = this.tileCount - 1;
+        if (head.x >= this.tileCount) head.x = 0;
+        if (head.y < 0) head.y = this.tileCount - 1;
+        if (head.y >= this.tileCount) head.y = 0;
+        
+        // Game over condition - only self collision
+        if (this.isSelfCollision(head)) {
             this.gameOver();
             return;
         }
@@ -114,9 +122,26 @@ class SnakeGame {
             this.score += 10;
             this.food = this.generateFood();
             this.updateScoreDisplay();
+            
+            // Optional: Increase speed slightly as score increases
+            if (this.score % 50 === 0 && this.gameSpeed > 80) {
+                this.gameSpeed -= 5;
+                this.restartGameLoop();
+            }
         } else {
             // Remove tail if no food eaten
             this.snake.pop();
+        }
+    }
+    
+    // Restart game loop with new speed
+    restartGameLoop() {
+        if (this.gameRunning) {
+            clearInterval(this.gameLoop);
+            this.gameLoop = setInterval(() => {
+                this.update();
+                this.draw();
+            }, this.gameSpeed);
         }
     }
     
@@ -125,8 +150,22 @@ class SnakeGame {
         this.ctx.fillStyle = '#1a1a1a';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
+        // Draw grid (optional)
+        this.ctx.strokeStyle = '#333';
+        this.ctx.lineWidth = 0.5;
+        for (let i = 0; i < this.tileCount; i++) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(i * this.gridSize, 0);
+            this.ctx.lineTo(i * this.gridSize, this.canvas.height);
+            this.ctx.stroke();
+            
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, i * this.gridSize);
+            this.ctx.lineTo(this.canvas.width, i * this.gridSize);
+            this.ctx.stroke();
+        }
+        
         // Draw snake
-        this.ctx.fillStyle = '#27ae60';
         this.snake.forEach((segment, index) => {
             if (index === 0) {
                 // Head - different color
@@ -148,21 +187,6 @@ class SnakeGame {
             2 * Math.PI
         );
         this.ctx.fill();
-        
-        // Draw grid (optional)
-        this.ctx.strokeStyle = '#333';
-        this.ctx.lineWidth = 0.5;
-        for (let i = 0; i < this.tileCount; i++) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(i * this.gridSize, 0);
-            this.ctx.lineTo(i * this.gridSize, this.canvas.height);
-            this.ctx.stroke();
-            
-            this.ctx.beginPath();
-            this.ctx.moveTo(0, i * this.gridSize);
-            this.ctx.lineTo(this.canvas.width, i * this.gridSize);
-            this.ctx.stroke();
-        }
     }
     
     generateFood() {
@@ -240,10 +264,6 @@ class SnakeGame {
                 }
                 break;
         }
-    }
-    
-    isWallCollision(head) {
-        return head.x < 0 || head.x >= this.tileCount || head.y < 0 || head.y >= this.tileCount;
     }
     
     isSelfCollision(head) {
