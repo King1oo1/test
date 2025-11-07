@@ -7,10 +7,10 @@ class SnakeGame {
         this.highScoreElement = document.getElementById(highScoreId);
         this.isFullscreen = isFullscreen;
         
-        // Game settings - MUCH SLOWER SPEED and BIGGER SIZES
-        this.gridSize = this.isFullscreen ? 30 : 25; // Bigger grid for fullscreen
+        // Game settings - SLOWER SPEED and COMPACT SIZES
+        this.gridSize = this.isFullscreen ? 25 : 20; // Adjusted for smaller canvas
         this.tileCount = this.canvas.width / this.gridSize;
-        this.gameSpeed = 200; // Much slower - increased from 150ms to 200ms
+        this.gameSpeed = 200; // Slow speed
         
         // Game state
         this.snake = [{ x: 10, y: 10 }];
@@ -148,7 +148,7 @@ class SnakeGame {
             this.ctx.stroke();
         }
         
-        // Draw snake with BIGGER size
+        // Draw snake with adjusted size
         this.snake.forEach((segment, index) => {
             if (index === 0) {
                 // Head - different color
@@ -156,17 +156,17 @@ class SnakeGame {
             } else {
                 this.ctx.fillStyle = '#27ae60';
             }
-            // Bigger snake segments
+            // Adjusted snake segments
             this.ctx.fillRect(segment.x * this.gridSize, segment.y * this.gridSize, this.gridSize - 1, this.gridSize - 1);
         });
         
-        // Draw food with BIGGER size
+        // Draw food with adjusted size
         this.ctx.fillStyle = '#e74c3c';
         this.ctx.beginPath();
         this.ctx.arc(
             this.food.x * this.gridSize + this.gridSize / 2,
             this.food.y * this.gridSize + this.gridSize / 2,
-            this.gridSize / 2 - 1, // Bigger food
+            this.gridSize / 2 - 1, // Adjusted food size
             0,
             2 * Math.PI
         );
@@ -290,11 +290,11 @@ class SnakeGame {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 24px Arial';
+        this.ctx.font = 'bold 20px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 30);
         
-        this.ctx.font = '18px Arial';
+        this.ctx.font = '16px Arial';
         this.ctx.fillText(`Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2);
         this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 25);
         this.ctx.fillText('Click Reset to play again', this.canvas.width / 2, this.canvas.height / 2 + 55);

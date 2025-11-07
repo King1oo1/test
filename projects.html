@@ -65,72 +65,73 @@
         </div>
 
         <!-- Enhanced Fullscreen Snake Game Modal -->
-        <div id="snakeModal" class="modal">
-            <div class="modal-content" style="max-width: 800px; padding: 0; overflow: hidden;">
-                <!-- Game Header -->
-                <div class="game-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; border-bottom: 3px solid #27ae60; position: sticky; top: 0; z-index: 10;">
-                    <div class="game-title" style="font-size: 1.5rem; font-weight: bold;">
-                        🐍 Snake Game
-                    </div>
-                    <div class="score-display" style="display: flex; gap: 2rem; font-size: 1.2rem; font-weight: bold;">
-                        <div>Score: <span id="fullscreenScore">0</span></div>
-                        <div>High Score: <span id="fullscreenHighScore">0</span></div>
+
+<!-- Enhanced Fullscreen Snake Game Modal -->
+<div id="snakeModal" class="modal">
+    <div class="modal-content">
+        <!-- Game Header -->
+        <div class="game-header">
+            <div class="game-title">
+                🐍 Snake Game
+            </div>
+            <div class="score-display">
+                <div>Score: <span id="fullscreenScore">0</span></div>
+                <div>High Score: <span id="fullscreenHighScore">0</span></div>
+            </div>
+        </div>
+        
+        <!-- Game Content - Compact Layout -->
+        <div class="modal-game-container">
+            <div class="compact-game-layout">
+                <!-- Game Canvas -->
+                <div class="canvas-container">
+                    <canvas id="fullscreenSnakeCanvas" width="500" height="500" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a;"></canvas>
+                </div>
+                
+                <!-- Compact Arrow Controls -->
+                <div class="compact-arrow-controls">
+                    <div class="compact-arrow-grid">
+                        <button class="control-btn medium-arrow-btn compact-arrow-up" data-direction="up">
+                            ⬆️
+                        </button>
+                        <button class="control-btn medium-arrow-btn compact-arrow-left" data-direction="left">
+                            ⬅️
+                        </button>
+                        <button class="control-btn medium-arrow-btn compact-arrow-right" data-direction="right">
+                            ➡️
+                        </button>
+                        <button class="control-btn medium-arrow-btn compact-arrow-down" data-direction="down">
+                            ⬇️
+                        </button>
                     </div>
                 </div>
                 
-                <!-- Game Content -->
-                <div class="modal-game-container">
-                    <!-- Game Canvas -->
-                    <div class="canvas-container" style="margin-bottom: 2rem; text-align: center;">
-                        <canvas id="fullscreenSnakeCanvas" width="600" height="600" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a; display: block; margin: 0 auto;"></canvas>
-                    </div>
-                    
-                    <!-- Enhanced Arrow Controls with Grid Layout -->
-                    <div class="enhanced-arrow-controls">
-                        <div class="arrow-grid">
-                            <button class="control-btn large-arrow-btn arrow-up" data-direction="up">
-                                ⬆️
-                            </button>
-                            <button class="control-btn large-arrow-btn arrow-left" data-direction="left">
-                                ⬅️
-                            </button>
-                            <button class="control-btn large-arrow-btn arrow-right" data-direction="right">
-                                ➡️
-                            </button>
-                            <button class="control-btn large-arrow-btn arrow-down" data-direction="down">
-                                ⬇️
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Control Buttons in Single Row -->
-                    <div class="control-buttons-row">
-                        <button id="fullscreenStartBtn" class="btn-primary enhanced-game-btn">
-                            ▶️ Start Game
-                        </button>
-                        <button id="fullscreenPauseBtn" class="btn-primary enhanced-game-btn">
-                            ⏸️ Pause
-                        </button>
-                        <button id="fullscreenResetBtn" class="btn-primary enhanced-game-btn">
-                            🔄 Reset
-                        </button>
-                        <button id="exitFullscreenBtn" class="btn-primary enhanced-game-btn" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-                            🖥️ Exit
-                        </button>
-                    </div>
-                    
-                    <!-- Game Instructions -->
-                    <div class="game-instructions" style="margin-top: 2rem; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px; text-align: center;">
-                        <h4 style="margin-bottom: 0.5rem; color: #2c3e50;">How to Play:</h4>
-                        <p style="margin: 0; font-size: 0.9rem;">
-                            Use <strong>Arrow Keys</strong> or tap the <strong>direction buttons</strong> to control the snake. 
-                            Eat the red food to grow and earn points. The snake wraps around the screen!
-                        </p>
-                    </div>
+                <!-- Compact Control Buttons -->
+                <div class="compact-control-buttons">
+                    <button id="fullscreenStartBtn" class="btn-primary compact-game-btn">
+                        ▶️ Start
+                    </button>
+                    <button id="fullscreenPauseBtn" class="btn-primary compact-game-btn">
+                        ⏸️ Pause
+                    </button>
+                    <button id="fullscreenResetBtn" class="btn-primary compact-game-btn">
+                        🔄 Reset
+                    </button>
+                    <button id="exitFullscreenBtn" class="btn-primary compact-game-btn" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        🖥️ Exit
+                    </button>
+                </div>
+                
+                <!-- Compact Instructions -->
+                <div class="compact-instructions">
+                    <p style="margin: 0; font-size: 0.8rem;">
+                        Use <strong>Arrow Keys</strong> or tap <strong>direction buttons</strong>. Eat food, avoid yourself!
+                    </p>
                 </div>
             </div>
         </div>
-
+    </div>
+</div>
         <!-- Upcoming Projects Section -->
         <div class="upcoming-projects">
             <h4>🚀 Upcoming Projects</h4>
