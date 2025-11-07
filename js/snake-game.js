@@ -1,4 +1,3 @@
-
 // snake-game.js - Classic Snake Game Implementation
 class SnakeGame {
     constructor(canvasId, scoreId, highScoreId, isFullscreen = false) {

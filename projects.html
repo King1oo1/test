@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +68,7 @@
         <div id="snakeModal" class="modal">
             <div class="modal-content" style="max-width: 800px; padding: 0; overflow: hidden;">
                 <!-- Game Header -->
-                <div class="game-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; border-bottom: 3px solid #27ae60;">
+                <div class="game-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; border-bottom: 3px solid #27ae60; position: sticky; top: 0; z-index: 10;">
                     <div class="game-title" style="font-size: 1.5rem; font-weight: bold;">
                         🐍 Snake Game
                     </div>
@@ -80,36 +79,32 @@
                 </div>
                 
                 <!-- Game Content -->
-                <div class="game-content" style="padding: 2rem; text-align: center;">
+                <div class="modal-game-container">
                     <!-- Game Canvas -->
-                    <div class="canvas-container" style="margin-bottom: 2rem;">
-                        <canvas id="fullscreenSnakeCanvas" width="600" height="600" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a;"></canvas>
+                    <div class="canvas-container" style="margin-bottom: 2rem; text-align: center;">
+                        <canvas id="fullscreenSnakeCanvas" width="600" height="600" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a; display: block; margin: 0 auto;"></canvas>
                     </div>
                     
-                    <!-- Enhanced Mobile Controls -->
-                    <div class="enhanced-mobile-controls" style="margin: 2rem 0;">
-                        <div class="control-row" style="display: flex; justify-content: center; margin-bottom: 1rem;">
-                            <button class="control-btn enhanced-control-btn" data-direction="up" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 1rem;">
+                    <!-- Enhanced Arrow Controls with Grid Layout -->
+                    <div class="enhanced-arrow-controls">
+                        <div class="arrow-grid">
+                            <button class="control-btn large-arrow-btn arrow-up" data-direction="up">
                                 ⬆️
                             </button>
-                        </div>
-                        <div class="control-row" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
-                            <button class="control-btn enhanced-control-btn" data-direction="left" style="width: 80px; height: 80px; font-size: 2rem;">
+                            <button class="control-btn large-arrow-btn arrow-left" data-direction="left">
                                 ⬅️
                             </button>
-                            <button class="control-btn enhanced-control-btn" data-direction="right" style="width: 80px; height: 80px; font-size: 2rem;">
+                            <button class="control-btn large-arrow-btn arrow-right" data-direction="right">
                                 ➡️
                             </button>
-                        </div>
-                        <div class="control-row" style="display: flex; justify-content: center;">
-                            <button class="control-btn enhanced-control-btn" data-direction="down" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 1rem;">
+                            <button class="control-btn large-arrow-btn arrow-down" data-direction="down">
                                 ⬇️
                             </button>
                         </div>
                     </div>
                     
-                    <!-- Game Control Buttons -->
-                    <div class="game-controls-enhanced" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 500px; margin: 0 auto;">
+                    <!-- Control Buttons in Single Row -->
+                    <div class="control-buttons-row">
                         <button id="fullscreenStartBtn" class="btn-primary enhanced-game-btn">
                             ▶️ Start Game
                         </button>
@@ -125,11 +120,11 @@
                     </div>
                     
                     <!-- Game Instructions -->
-                    <div class="game-instructions" style="margin-top: 2rem; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px;">
+                    <div class="game-instructions" style="margin-top: 2rem; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px; text-align: center;">
                         <h4 style="margin-bottom: 0.5rem; color: #2c3e50;">How to Play:</h4>
                         <p style="margin: 0; font-size: 0.9rem;">
                             Use <strong>Arrow Keys</strong> or tap the <strong>direction buttons</strong> to control the snake. 
-                            Eat the red food to grow and earn points. Avoid hitting yourself!
+                            Eat the red food to grow and earn points. The snake wraps around the screen!
                         </p>
                     </div>
                 </div>
@@ -171,13 +166,21 @@
         const modal = document.getElementById('snakeModal');
         modal.style.display = 'block';
         
-        // Update project scores in modal
+        // Prevent body scrolling - multiple methods for maximum compatibility
+        document.body.classList.add('modal-open');
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.height = '100%';
+        
+        // Update scores
         const projectScore = document.getElementById('projectScore').textContent;
         const projectHighScore = document.getElementById('projectHighScore').textContent;
         document.getElementById('fullscreenScore').textContent = projectScore;
         document.getElementById('fullscreenHighScore').textContent = projectHighScore;
         
-        // Initialize fullscreen game
+        // Initialize game
         setTimeout(() => {
             if (window.fullscreenSnakeGame) {
                 fullscreenSnakeGame.resetGame();
@@ -185,30 +188,67 @@
         }, 100);
     }
 
-    // Close modal when clicking X
+    function closeSnakeModal() {
+        const modal = document.getElementById('snakeModal');
+        modal.style.display = 'none';
+        
+        // Restore body scrolling
+        document.body.classList.remove('modal-open');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.height = '';
+        
+        // Update project page scores
+        if (window.fullscreenSnakeGame) {
+            const currentScore = fullscreenSnakeGame.score;
+            const highScore = fullscreenSnakeGame.highScore;
+            document.getElementById('projectScore').textContent = currentScore;
+            document.getElementById('projectHighScore').textContent = highScore;
+            
+            // Save to localStorage
+            localStorage.setItem('snakeHighScore', highScore);
+        }
+    }
+
+    // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
-        // Exit fullscreen button
+        // Exit button
         const exitBtn = document.getElementById('exitFullscreenBtn');
         if (exitBtn) {
-            exitBtn.addEventListener('click', function() {
-                document.getElementById('snakeModal').style.display = 'none';
+            exitBtn.addEventListener('click', closeSnakeModal);
+        }
+
+        // Escape key to close
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSnakeModal();
+            }
+        });
+
+        // Close when clicking outside modal content
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('snakeModal');
+            if (event.target === modal) {
+                closeSnakeModal();
+            }
+        });
+
+        // Prevent modal content clicks from closing modal
+        const modalContent = document.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.addEventListener('click', function(event) {
+                event.stopPropagation();
             });
         }
 
-        // Update project page scores from localStorage
+        // Initialize scores
         const highScore = localStorage.getItem('snakeHighScore') || '0';
         document.getElementById('projectHighScore').textContent = highScore;
         document.getElementById('fullscreenHighScore').textContent = highScore;
-
+        
         console.log('Projects page loaded successfully!');
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
-        const modal = document.getElementById('snakeModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
     });
 </script>
 

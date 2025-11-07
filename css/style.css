@@ -1763,6 +1763,7 @@ body {
 }
 
 /* ===== ENHANCED SNAKE GAME STYLES ===== */
+/* ===== ENHANCED SNAKE GAME STYLES ===== */
 
 .enhanced-control-btn {
     background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
@@ -1797,6 +1798,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    flex: 1;
+    min-width: 120px;
 }
 
 .simple-game-section {
@@ -1810,8 +1813,72 @@ body {
     box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
 }
 
-/* Responsive design for mobile controls */
+/* Enhanced control buttons container */
+.game-controls-enhanced {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ===== MODAL SCROLL FIXES ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+}
+
+body.modal-open {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 2% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-game-container {
+    padding: 2rem;
+    max-height: calc(90vh - 4rem);
+    overflow-y: auto;
+}
+
+/* Ensure modal takes full viewport height on mobile */
 @media (max-width: 768px) {
+    .modal-content {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+    }
+    
+    .modal-game-container {
+        padding: 1rem;
+        max-height: calc(100vh - 2rem);
+    }
+    
     .enhanced-control-btn {
         width: 70px !important;
         height: 70px !important;
@@ -1819,14 +1886,14 @@ body {
     }
     
     .game-controls-enhanced {
-        grid-template-columns: 1fr !important;
-        gap: 0.8rem !important;
+        flex-direction: column;
     }
     
     .enhanced-game-btn {
         padding: 0.8rem 1.2rem !important;
         font-size: 1rem !important;
         min-height: 50px;
+        min-width: 100%;
     }
     
     #fullscreenSnakeCanvas {
@@ -1854,67 +1921,56 @@ body {
     }
 }
 
-
-
-/* ===== MODAL SCROLL FIXES ===== */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
-    overflow-y: auto; /* Allow modal to scroll if needed */
+/* New layout for control buttons in a single row */
+.control-buttons-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
 }
 
-.modal-open {
-    overflow: hidden; /* Prevent body scroll when modal is open */
+.control-buttons-row .enhanced-game-btn {
+    flex: 1;
+    min-width: 140px;
 }
 
-.modal-content {
-    background-color: var(--card-bg);
-    margin: 2% auto;
-    padding: 0; /* Remove padding from content, add to inner elements */
-    border-radius: 12px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow-y: auto; /* Allow content to scroll if too tall */
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+/* Enhanced arrow controls with more spacing */
+.enhanced-arrow-controls {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 16px;
+    border: 2px solid #3498db;
 }
 
-/* Enhanced modal content structure */
-.modal-game-container {
-    padding: 2rem;
-    max-height: calc(90vh - 4rem); /* Account for padding */
-    overflow-y: auto;
+.arrow-grid {
+    display: grid;
+    grid-template-areas:
+        ". up ."
+        "left . right"
+        ". down .";
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
-/* Ensure modal takes full viewport height on mobile */
-@media (max-width: 768px) {
-    .modal-content {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        max-width: none;
-        max-height: none;
-        border-radius: 0;
-    }
-    
-    .modal-game-container {
-        padding: 1rem;
-        max-height: calc(100vh - 2rem);
-    }
+.arrow-up { grid-area: up; }
+.arrow-left { grid-area: left; }
+.arrow-right { grid-area: right; }
+.arrow-down { grid-area: down; }
+
+.large-arrow-btn {
+    width: 90px !important;
+    height: 90px !important;
+    font-size: 2.5rem !important;
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%) !important;
+    box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4) !important;
 }
 
-/* Prevent body scroll when modal is open */
-body.modal-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+.large-arrow-btn:hover {
+    transform: scale(1.15) !important;
+    box-shadow: 0 12px 25px rgba(39, 174, 96, 0.6) !important;
 }
