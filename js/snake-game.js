@@ -1,3 +1,4 @@
+
 // snake-game.js - Classic Snake Game Implementation
 class SnakeGame {
     constructor(canvasId, scoreId, highScoreId, isFullscreen = false) {
@@ -8,9 +9,9 @@ class SnakeGame {
         this.isFullscreen = isFullscreen;
         
         // Game settings - SLOWER SPEED and BIGGER CANVAS
-        this.gridSize = this.isFullscreen ? 35 : 20; // Bigger grid for bigger canvas
+        this.gridSize = this.isFullscreen ? 35 : 20;
         this.tileCount = this.canvas.width / this.gridSize;
-        this.gameSpeed = 350; // Slow speed
+        this.gameSpeed = 330; // Slow speed
         
         // Game state
         this.snake = [{ x: 10, y: 10 }];
@@ -148,16 +149,28 @@ class SnakeGame {
             this.ctx.stroke();
         }
         
-        // Draw snake with adjusted size
+        // Draw snake with eyes and tail
         this.snake.forEach((segment, index) => {
             if (index === 0) {
-                // Head - different color
-                this.ctx.fillStyle = '#2ecc71';
+                // Head - different color with eyes
+                this.drawSnakeHead(segment);
+            } else if (index === this.snake.length - 1) {
+                // Tail - draw as tail
+                this.drawSnakeTail(segment, index);
             } else {
+                // Body - regular segment
                 this.ctx.fillStyle = '#27ae60';
+                this.ctx.fillRect(segment.x * this.gridSize, segment.y * this.gridSize, this.gridSize - 1, this.gridSize - 1);
+                
+                // Add some body pattern
+                this.ctx.fillStyle = '#229954';
+                this.ctx.fillRect(
+                    segment.x * this.gridSize + 2, 
+                    segment.y * this.gridSize + 2, 
+                    this.gridSize - 5, 
+                    this.gridSize - 5
+                );
             }
-            // Adjusted snake segments
-            this.ctx.fillRect(segment.x * this.gridSize, segment.y * this.gridSize, this.gridSize - 1, this.gridSize - 1);
         });
         
         // Draw food with adjusted size
@@ -166,11 +179,251 @@ class SnakeGame {
         this.ctx.arc(
             this.food.x * this.gridSize + this.gridSize / 2,
             this.food.y * this.gridSize + this.gridSize / 2,
-            this.gridSize / 2 - 1, // Adjusted food size
+            this.gridSize / 2 - 1,
             0,
             2 * Math.PI
         );
         this.ctx.fill();
+        
+        // Add shine to food
+        this.ctx.fillStyle = '#ff8c80';
+        this.ctx.beginPath();
+        this.ctx.arc(
+            this.food.x * this.gridSize + this.gridSize / 2 - 3,
+            this.food.y * this.gridSize + this.gridSize / 2 - 3,
+            this.gridSize / 6,
+            0,
+            2 * Math.PI
+        );
+        this.ctx.fill();
+    }
+    
+    drawSnakeHead(head) {
+        // Draw head base
+        this.ctx.fillStyle = '#2ecc71';
+        this.ctx.fillRect(head.x * this.gridSize, head.y * this.gridSize, this.gridSize - 1, this.gridSize - 1);
+        
+        // Draw eyes based on direction
+        this.ctx.fillStyle = 'white';
+        
+        if (this.dx === 1) { // Moving right
+            // Right eye (facing right)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 8,
+                head.y * this.gridSize + 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Left eye (facing right)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 8,
+                head.y * this.gridSize + this.gridSize - 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Pupils
+            this.ctx.fillStyle = 'black';
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 6,
+                head.y * this.gridSize + 8,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 6,
+                head.y * this.gridSize + this.gridSize - 8,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+        } else if (this.dx === -1) { // Moving left
+            // Right eye (facing left)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 8,
+                head.y * this.gridSize + 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Left eye (facing left)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 8,
+                head.y * this.gridSize + this.gridSize - 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Pupils
+            this.ctx.fillStyle = 'black';
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 10,
+                head.y * this.gridSize + 8,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 10,
+                head.y * this.gridSize + this.gridSize - 8,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+        } else if (this.dy === -1) { // Moving up
+            // Right eye (facing up)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 8,
+                head.y * this.gridSize + 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Left eye (facing up)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 8,
+                head.y * this.gridSize + 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Pupils
+            this.ctx.fillStyle = 'black';
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 8,
+                head.y * this.gridSize + 10,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 8,
+                head.y * this.gridSize + 10,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+        } else if (this.dy === 1) { // Moving down
+            // Right eye (facing down)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 8,
+                head.y * this.gridSize + this.gridSize - 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Left eye (facing down)
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 8,
+                head.y * this.gridSize + this.gridSize - 8,
+                3, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            // Pupils
+            this.ctx.fillStyle = 'black';
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + 8,
+                head.y * this.gridSize + this.gridSize - 10,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+            
+            this.ctx.beginPath();
+            this.ctx.arc(
+                head.x * this.gridSize + this.gridSize - 8,
+                head.y * this.gridSize + this.gridSize - 10,
+                1.5, 0, 2 * Math.PI
+            );
+            this.ctx.fill();
+        }
+        
+        // Draw mouth (simple line)
+        this.ctx.strokeStyle = '#c0392b';
+        this.ctx.lineWidth = 1;
+        
+        if (this.dx === 1) { // Right
+            this.ctx.beginPath();
+            this.ctx.moveTo(head.x * this.gridSize + this.gridSize - 5, head.y * this.gridSize + this.gridSize / 2);
+            this.ctx.lineTo(head.x * this.gridSize + this.gridSize, head.y * this.gridSize + this.gridSize / 2);
+            this.ctx.stroke();
+        } else if (this.dx === -1) { // Left
+            this.ctx.beginPath();
+            this.ctx.moveTo(head.x * this.gridSize, head.y * this.gridSize + this.gridSize / 2);
+            this.ctx.lineTo(head.x * this.gridSize + 5, head.y * this.gridSize + this.gridSize / 2);
+            this.ctx.stroke();
+        } else if (this.dy === -1) { // Up
+            this.ctx.beginPath();
+            this.ctx.moveTo(head.x * this.gridSize + this.gridSize / 2, head.y * this.gridSize);
+            this.ctx.lineTo(head.x * this.gridSize + this.gridSize / 2, head.y * this.gridSize + 5);
+            this.ctx.stroke();
+        } else if (this.dy === 1) { // Down
+            this.ctx.beginPath();
+            this.ctx.moveTo(head.x * this.gridSize + this.gridSize / 2, head.y * this.gridSize + this.gridSize - 5);
+            this.ctx.lineTo(head.x * this.gridSize + this.gridSize / 2, head.y * this.gridSize + this.gridSize);
+            this.ctx.stroke();
+        }
+    }
+    
+    drawSnakeTail(tail, tailIndex) {
+        // Get the direction for the tail (based on the segment before the tail)
+        const prevSegment = this.snake[tailIndex - 1];
+        const tailDx = tail.x - prevSegment.x;
+        const tailDy = tail.y - prevSegment.y;
+        
+        // Draw tail base
+        this.ctx.fillStyle = '#27ae60';
+        this.ctx.fillRect(tail.x * this.gridSize, tail.y * this.gridSize, this.gridSize - 1, this.gridSize - 1);
+        
+        // Draw tail tip based on direction
+        this.ctx.fillStyle = '#1e8449';
+        
+        if (tailDx === 1) { // Tail pointing right
+            this.ctx.beginPath();
+            this.ctx.moveTo(tail.x * this.gridSize, tail.y * this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize, tail.y * this.gridSize + this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize / 2, tail.y * this.gridSize + this.gridSize / 2);
+            this.ctx.closePath();
+            this.ctx.fill();
+        } else if (tailDx === -1) { // Tail pointing left
+            this.ctx.beginPath();
+            this.ctx.moveTo(tail.x * this.gridSize + this.gridSize, tail.y * this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize, tail.y * this.gridSize + this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize / 2, tail.y * this.gridSize + this.gridSize / 2);
+            this.ctx.closePath();
+            this.ctx.fill();
+        } else if (tailDy === 1) { // Tail pointing down
+            this.ctx.beginPath();
+            this.ctx.moveTo(tail.x * this.gridSize, tail.y * this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize, tail.y * this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize / 2, tail.y * this.gridSize + this.gridSize / 2);
+            this.ctx.closePath();
+            this.ctx.fill();
+        } else if (tailDy === -1) { // Tail pointing up
+            this.ctx.beginPath();
+            this.ctx.moveTo(tail.x * this.gridSize, tail.y * this.gridSize + this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize, tail.y * this.gridSize + this.gridSize);
+            this.ctx.lineTo(tail.x * this.gridSize + this.gridSize / 2, tail.y * this.gridSize + this.gridSize / 2);
+            this.ctx.closePath();
+            this.ctx.fill();
+        }
     }
     
     generateFood() {
