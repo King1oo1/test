@@ -7,8 +7,8 @@ class SnakeGame {
         this.highScoreElement = document.getElementById(highScoreId);
         this.isFullscreen = isFullscreen;
         
-        // Game settings - SLOWER SPEED and COMPACT SIZES
-        this.gridSize = this.isFullscreen ? 25 : 20; // Adjusted for smaller canvas
+        // Game settings - SLOWER SPEED and BIGGER CANVAS
+        this.gridSize = this.isFullscreen ? 30 : 20; // Bigger grid for bigger canvas
         this.tileCount = this.canvas.width / this.gridSize;
         this.gameSpeed = 200; // Slow speed
         
@@ -290,11 +290,11 @@ class SnakeGame {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 20px Arial';
+        this.ctx.font = 'bold 24px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 30);
         
-        this.ctx.font = '16px Arial';
+        this.ctx.font = '18px Arial';
         this.ctx.fillText(`Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2);
         this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 25);
         this.ctx.fillText('Click Reset to play again', this.canvas.width / 2, this.canvas.height / 2 + 55);

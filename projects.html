@@ -67,14 +67,15 @@
         <!-- Enhanced Fullscreen Snake Game Modal -->
 
 <!-- Enhanced Fullscreen Snake Game Modal -->
+<!-- Enhanced Fullscreen Snake Game Modal -->
 <div id="snakeModal" class="modal">
     <div class="modal-content">
-        <!-- Game Header -->
-        <div class="game-header">
-            <div class="game-title">
+        <!-- SMALLER Game Header -->
+        <div class="game-header small-game-header">
+            <div class="game-title small-game-title">
                 🐍 Snake Game
             </div>
-            <div class="score-display">
+            <div class="score-display small-score-display">
                 <div>Score: <span id="fullscreenScore">0</span></div>
                 <div>High Score: <span id="fullscreenHighScore">0</span></div>
             </div>
@@ -83,24 +84,24 @@
         <!-- Game Content - Compact Layout -->
         <div class="modal-game-container">
             <div class="compact-game-layout">
-                <!-- Game Canvas -->
+                <!-- BIGGER Game Canvas -->
                 <div class="canvas-container">
-                    <canvas id="fullscreenSnakeCanvas" width="500" height="500" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a;"></canvas>
+                    <canvas id="fullscreenSnakeCanvas" width="600" height="600" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a;"></canvas>
                 </div>
                 
-                <!-- Compact Arrow Controls -->
-                <div class="compact-arrow-controls">
-                    <div class="compact-arrow-grid">
-                        <button class="control-btn medium-arrow-btn compact-arrow-up" data-direction="up">
+                <!-- SMALLER Arrow Controls -->
+                <div class="small-arrow-controls">
+                    <div class="small-arrow-grid">
+                        <button class="control-btn small-arrow-btn small-arrow-up" data-direction="up">
                             ⬆️
                         </button>
-                        <button class="control-btn medium-arrow-btn compact-arrow-left" data-direction="left">
+                        <button class="control-btn small-arrow-btn small-arrow-left" data-direction="left">
                             ⬅️
                         </button>
-                        <button class="control-btn medium-arrow-btn compact-arrow-right" data-direction="right">
+                        <button class="control-btn small-arrow-btn small-arrow-right" data-direction="right">
                             ➡️
                         </button>
-                        <button class="control-btn medium-arrow-btn compact-arrow-down" data-direction="down">
+                        <button class="control-btn small-arrow-btn small-arrow-down" data-direction="down">
                             ⬇️
                         </button>
                     </div>
@@ -124,7 +125,7 @@
                 
                 <!-- Compact Instructions -->
                 <div class="compact-instructions">
-                    <p style="margin: 0; font-size: 0.8rem;">
+                    <p style="margin: 0; font-size: 0.75rem;">
                         Use <strong>Arrow Keys</strong> or tap <strong>direction buttons</strong>. Eat food, avoid yourself!
                     </p>
                 </div>
@@ -132,7 +133,8 @@
         </div>
     </div>
 </div>
-        <!-- Upcoming Projects Section -->
+
+<!-- Upcoming Projects Section -->
         <div class="upcoming-projects">
             <h4>🚀 Upcoming Projects</h4>
             <ul>
