@@ -29,6 +29,23 @@
             </article>
         </div>
 
+        <!-- Fullscreen Snake Game Modal -->
+        <div id="snakeModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="fullscreen-game-container">
+                    <h3>🐍 Snake Game - Fullscreen</h3>
+                    <canvas id="fullscreenSnakeCanvas" width="600" height="600"></canvas>
+                    <div class="fullscreen-controls">
+                        <button id="fullscreenStartBtn" class="btn-primary">▶️ Start</button>
+                        <button id="fullscreenPauseBtn" class="btn-primary">⏸️ Pause</button>
+                        <button id="fullscreenResetBtn" class="btn-primary">🔄 Reset</button>
+                        <button id="exitFullscreenBtn" class="btn-primary">🚪 Exit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="coming-soon">
             <h3>More Projects Coming Soon!</h3>
             <p>I'm continuously working on new projects and will update this section as I complete them. Currently learning advanced JavaScript and mobile development frameworks.</p>
@@ -44,6 +61,62 @@
 <script src="js/browser.js"></script>
 <script src="js/thirdparty.js"></script>
 <script src="js/script.js"></script>
+ <script src="js/snake-game.js"></script> <!-- New Snake Game JS -->
+
+
+
+
+ <!-- Projects Page Specific JavaScript -->
+    <script>
+        // Projects page functionality
+        function openSnakeFullscreen() {
+            const modal = document.getElementById('snakeModal');
+            modal.style.display = 'block';
+            
+            // Initialize fullscreen game
+            setTimeout(() => {
+                if (window.fullscreenSnakeGame) {
+                    fullscreenSnakeGame.resetGame();
+                }
+            }, 100);
+        }
+
+        function viewSourceCode() {
+            alert('Source code for the Snake game is available in the js/snake-game.js file!');
+            // In a real scenario, you might link to GitHub
+            // window.open('https://github.com/yourusername/learning-journal/blob/main/js/snake-game.js', '_blank');
+        }
+
+        // Close modal when clicking X
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('snakeModal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('snakeModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Exit fullscreen button
+        document.getElementById('exitFullscreenBtn').addEventListener('click', function() {
+            document.getElementById('snakeModal').style.display = 'none';
+        });
+
+        // Initialize projects page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Projects page loaded successfully!');
+            
+            // Any projects page specific initialization
+            if (window.snakeGame) {
+                console.log('Snake game initialized on projects page');
+            }
+        });
+    </script>
+
+
 
 </body>
 </html>
