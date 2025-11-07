@@ -10,7 +10,7 @@ class SnakeGame {
         // Game settings - SLOWER SPEED and BIGGER CANVAS
         this.gridSize = this.isFullscreen ? 30 : 20; // Bigger grid for bigger canvas
         this.tileCount = this.canvas.width / this.gridSize;
-        this.gameSpeed = 200; // Slow speed
+        this.gameSpeed = 300; // Slow speed
         
         // Game state
         this.snake = [{ x: 10, y: 10 }];
