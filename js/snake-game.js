@@ -7,10 +7,10 @@ class SnakeGame {
         this.scoreElement = document.getElementById(scoreId);
         this.highScoreElement = document.getElementById(highScoreId);
         
-        // Game settings - SLOWER SPEED
+        // Game settings - MUCH SLOWER SPEED
         this.gridSize = 20;
         this.tileCount = this.canvas.width / this.gridSize;
-        this.gameSpeed = 150; // Increased from 100ms to 150ms (slower)
+        this.gameSpeed = 200; // Much slower - increased from 150ms to 200ms
         
         // Game state
         this.snake = [{ x: 10, y: 10 }];
@@ -42,13 +42,15 @@ class SnakeGame {
             document.getElementById(resetBtnId).addEventListener('click', () => this.resetGame());
         }
         
-        // Mobile touch controls
-        document.querySelectorAll('.control-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const direction = e.target.dataset.direction;
-                this.handleDirection(direction);
+        // Mobile touch controls - only for fullscreen mode
+        if (this.canvas.id === 'fullscreenSnakeCanvas') {
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const direction = e.target.dataset.direction;
+                    this.handleDirection(direction);
+                });
             });
-        });
+        }
         
         console.log('Snake game event listeners setup complete');
     }
@@ -63,7 +65,7 @@ class SnakeGame {
         this.gameLoop = setInterval(() => {
             this.update();
             this.draw();
-        }, this.gameSpeed); // Use the configurable game speed
+        }, this.gameSpeed);
         
         console.log('Snake game started');
     }
@@ -122,26 +124,9 @@ class SnakeGame {
             this.score += 10;
             this.food = this.generateFood();
             this.updateScoreDisplay();
-            
-            // Optional: Increase speed slightly as score increases
-            if (this.score % 50 === 0 && this.gameSpeed > 80) {
-                this.gameSpeed -= 5;
-                this.restartGameLoop();
-            }
         } else {
             // Remove tail if no food eaten
             this.snake.pop();
-        }
-    }
-    
-    // Restart game loop with new speed
-    restartGameLoop() {
-        if (this.gameRunning) {
-            clearInterval(this.gameLoop);
-            this.gameLoop = setInterval(() => {
-                this.update();
-                this.draw();
-            }, this.gameSpeed);
         }
     }
     
@@ -176,17 +161,23 @@ class SnakeGame {
             this.ctx.fillRect(segment.x * this.gridSize, segment.y * this.gridSize, this.gridSize - 2, this.gridSize - 2);
         });
         
-        // Draw food
+        // Draw food - make it bigger and more visible
         this.ctx.fillStyle = '#e74c3c';
         this.ctx.beginPath();
         this.ctx.arc(
             this.food.x * this.gridSize + this.gridSize / 2,
             this.food.y * this.gridSize + this.gridSize / 2,
-            this.gridSize / 2 - 2,
+            this.gridSize / 2 - 1, // Slightly bigger food
             0,
             2 * Math.PI
         );
         this.ctx.fill();
+        
+        // Add glow effect to food
+        this.ctx.shadowColor = '#e74c3c';
+        this.ctx.shadowBlur = 10;
+        this.ctx.fill();
+        this.ctx.shadowBlur = 0;
     }
     
     generateFood() {
@@ -303,18 +294,18 @@ class SnakeGame {
         }
         
         // Draw game over screen
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 24px Arial';
+        this.ctx.font = 'bold 28px Arial';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 40);
         
-        this.ctx.font = '18px Arial';
+        this.ctx.font = '20px Arial';
         this.ctx.fillText(`Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2);
-        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 25);
-        this.ctx.fillText('Click Reset to play again', this.canvas.width / 2, this.canvas.height / 2 + 55);
+        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 30);
+        this.ctx.fillText('Click Reset to play again', this.canvas.width / 2, this.canvas.height / 2 + 70);
         
         console.log('Game Over - Score:', this.score);
     }
@@ -330,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     snakeGame.setupEventListeners('startSnakeBtn', 'pauseSnakeBtn', 'resetSnakeBtn');
     
     // Fullscreen modal snake game
-    fullscreenSnakeGame = new SnakeGame('fullscreenSnakeCanvas', null, null);
+    fullscreenSnakeGame = new SnakeGame('fullscreenSnakeCanvas', 'fullscreenSnakeScore', 'fullscreenSnakeHighScore');
     fullscreenSnakeGame.setupEventListeners('fullscreenStartBtn', 'fullscreenPauseBtn', 'fullscreenResetBtn');
     
     console.log('Snake games initialized successfully!');

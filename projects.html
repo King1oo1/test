@@ -46,8 +46,9 @@
                             </div>
                         </div>
                         
-                        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+                        <canvas id="snakeCanvas" width="500" height="500"></canvas>
                         
+                        <!-- SIMPLIFIED CONTROLS - Only these 4 buttons -->
                         <div class="game-controls">
                             <button id="startSnakeBtn" class="btn-primary">▶️ Start Game</button>
                             <button id="pauseSnakeBtn" class="btn-primary">⏸️ Pause</button>
@@ -55,27 +56,14 @@
                             <button onclick="openSnakeFullscreen()" class="btn-primary">🖥️ Fullscreen</button>
                         </div>
                         
-                        <!-- Mobile Touch Controls (Hidden by default, shown on mobile) -->
-                        <div class="mobile-controls">
-                            <div class="control-row">
-                                <button class="control-btn" data-direction="up">⬆️</button>
-                            </div>
-                            <div class="control-row">
-                                <button class="control-btn" data-direction="left">⬅️</button>
-                                <button class="control-btn" data-direction="right">➡️</button>
-                            </div>
-                            <div class="control-row">
-                                <button class="control-btn" data-direction="down">⬇️</button>
-                            </div>
-                        </div>
-                        
                         <div class="game-instructions">
                             <h4>How to Play:</h4>
                             <ul>
-                                <li>Use <strong>Arrow Keys</strong> or <strong>Swipe</strong> to control the snake</li>
+                                <li>Use <strong>Arrow Keys</strong> to control the snake</li>
                                 <li>Eat the red food to grow and earn points</li>
-                                <li>Avoid hitting walls and yourself</li>
-                                <li>Try to beat your high score!</li>
+                                <li>Snake wraps around screen edges</li>
+                                <li>Don't hit yourself!</li>
+                                <li>Click <strong>Fullscreen</strong> for touch controls on mobile</li>
                             </ul>
                         </div>
                     </div>
@@ -88,11 +76,6 @@
                     <span class="tech-tag">Object-Oriented Programming</span>
                     <span class="tech-tag">Local Storage</span>
                     <span class="tech-tag">Mobile Controls</span>
-                </div>
-                
-                <div class="project-links">
-                    <button onclick="openSnakeFullscreen()" class="btn-primary">🎮 Play Snake Game</button>
-                    <button onclick="viewSourceCode()" class="btn-primary">📝 View Source Code</button>
                 </div>
             </article>
         </div>
@@ -109,16 +92,18 @@
                             <div>High Score: <span id="fullscreenSnakeHighScore">0</span></div>
                         </div>
                     </div>
+                    
+                    <!-- Bigger canvas for fullscreen -->
                     <canvas id="fullscreenSnakeCanvas" width="600" height="600"></canvas>
+                    
+                    <!-- Fullscreen controls - only Exit button -->
                     <div class="fullscreen-controls">
-                        <button id="fullscreenStartBtn" class="btn-primary">▶️ Start</button>
-                        <button id="fullscreenPauseBtn" class="btn-primary">⏸️ Pause</button>
-                        <button id="fullscreenResetBtn" class="btn-primary">🔄 Reset</button>
-                        <button id="exitFullscreenBtn" class="btn-primary">🚪 Exit</button>
+                        <button id="exitFullscreenBtn" class="btn-primary">🚪 Exit Fullscreen</button>
                     </div>
                     
-                    <!-- Mobile controls for fullscreen -->
+                    <!-- Mobile controls ONLY in fullscreen -->
                     <div class="mobile-controls">
+                        <p style="text-align: center; margin-bottom: 1rem; color: #666;">Use arrow keys or touch controls below:</p>
                         <div class="control-row">
                             <button class="control-btn" data-direction="up">⬆️</button>
                         </div>
@@ -132,7 +117,7 @@
                     </div>
                     
                     <div class="game-instructions">
-                        <p><strong>Controls:</strong> Arrow Keys or Swipe | <strong>Goal:</strong> Eat food, avoid collisions!</p>
+                        <p><strong>Controls:</strong> Arrow Keys or Touch Buttons | <strong>Goal:</strong> Eat food, avoid self-collision!</p>
                     </div>
                 </div>
             </div>
@@ -177,14 +162,9 @@
         setTimeout(() => {
             if (window.fullscreenSnakeGame) {
                 fullscreenSnakeGame.resetGame();
+                fullscreenSnakeGame.startGame(); // Auto-start in fullscreen
             }
         }, 100);
-    }
-
-    function viewSourceCode() {
-        alert('Source code for the Snake game is available in the js/snake-game.js file!');
-        // In a real scenario, you might link to GitHub
-        // window.open('https://github.com/yourusername/learning-journal/blob/main/js/snake-game.js', '_blank');
     }
 
     // Close modal when clicking X
