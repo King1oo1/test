@@ -36,36 +36,21 @@
                 <h2>Classic Snake Game</h2>
                 <p>A modern implementation of the classic Snake game using HTML5 Canvas and JavaScript. Features smooth controls, score tracking, high score persistence, and responsive design that works on both desktop and mobile devices.</p>
                 
-                <!-- Snake Game Embed -->
-                <div class="game-embed">
-                    <div class="snake-game-container">
-                        <div class="game-header">
-                            <div class="score-board">
-                                <div>Score: <span id="snakeScore">0</span></div>
-                                <div>High Score: <span id="snakeHighScore">0</span></div>
-                            </div>
+                <!-- Simple Play Button Section -->
+                <div class="simple-game-section" style="text-align: center; margin: 2rem 0; padding: 2rem; background: rgba(52, 152, 219, 0.1); border-radius: 12px;">
+                    <div class="score-display" style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: center; gap: 2rem; font-size: 1.2rem; font-weight: bold;">
+                            <div>Score: <span id="projectScore">0</span></div>
+                            <div>High Score: <span id="projectHighScore">0</span></div>
                         </div>
-                        
-                        <canvas id="snakeCanvas" width="500" height="500"></canvas>
-                        
-                        <!-- SIMPLIFIED CONTROLS - Only these 4 buttons -->
-                        <div class="game-controls">
-                            <button id="startSnakeBtn" class="btn-primary">▶️ Start Game</button>
-                            <button id="pauseSnakeBtn" class="btn-primary">⏸️ Pause</button>
-                            <button id="resetSnakeBtn" class="btn-primary">🔄 Reset</button>
-                            <button onclick="openSnakeFullscreen()" class="btn-primary">🖥️ Fullscreen</button>
-                        </div>
-                        
-                        <div class="game-instructions">
-                            <h4>How to Play:</h4>
-                            <ul>
-                                <li>Use <strong>Arrow Keys</strong> to control the snake</li>
-                                <li>Eat the red food to grow and earn points</li>
-                                <li>Snake wraps around screen edges</li>
-                                <li>Don't hit yourself!</li>
-                                <li>Click <strong>Fullscreen</strong> for touch controls on mobile</li>
-                            </ul>
-                        </div>
+                    </div>
+                    
+                    <button onclick="openSnakeFullscreen()" class="btn-primary" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                        🎮 Play Snake Game
+                    </button>
+                    
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                        Click to play in fullscreen mode with enhanced controls
                     </div>
                 </div>
                 
@@ -80,44 +65,72 @@
             </article>
         </div>
 
-        <!-- Fullscreen Snake Game Modal -->
+        <!-- Enhanced Fullscreen Snake Game Modal -->
         <div id="snakeModal" class="modal">
-            <div class="modal-content">
-                <span class="close-modal">&times;</span>
-                <div class="fullscreen-game-container">
-                    <h3>🐍 Snake Game - Fullscreen</h3>
-                    <div class="game-header">
-                        <div class="score-board">
-                            <div>Score: <span id="fullscreenSnakeScore">0</span></div>
-                            <div>High Score: <span id="fullscreenSnakeHighScore">0</span></div>
+            <div class="modal-content" style="max-width: 800px; padding: 0; overflow: hidden;">
+                <!-- Game Header -->
+                <div class="game-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; border-bottom: 3px solid #27ae60;">
+                    <div class="game-title" style="font-size: 1.5rem; font-weight: bold;">
+                        🐍 Snake Game
+                    </div>
+                    <div class="score-display" style="display: flex; gap: 2rem; font-size: 1.2rem; font-weight: bold;">
+                        <div>Score: <span id="fullscreenScore">0</span></div>
+                        <div>High Score: <span id="fullscreenHighScore">0</span></div>
+                    </div>
+                </div>
+                
+                <!-- Game Content -->
+                <div class="game-content" style="padding: 2rem; text-align: center;">
+                    <!-- Game Canvas -->
+                    <div class="canvas-container" style="margin-bottom: 2rem;">
+                        <canvas id="fullscreenSnakeCanvas" width="600" height="600" style="border: 3px solid #2c3e50; border-radius: 8px; background: #1a1a1a;"></canvas>
+                    </div>
+                    
+                    <!-- Enhanced Mobile Controls -->
+                    <div class="enhanced-mobile-controls" style="margin: 2rem 0;">
+                        <div class="control-row" style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                            <button class="control-btn enhanced-control-btn" data-direction="up" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 1rem;">
+                                ⬆️
+                            </button>
+                        </div>
+                        <div class="control-row" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+                            <button class="control-btn enhanced-control-btn" data-direction="left" style="width: 80px; height: 80px; font-size: 2rem;">
+                                ⬅️
+                            </button>
+                            <button class="control-btn enhanced-control-btn" data-direction="right" style="width: 80px; height: 80px; font-size: 2rem;">
+                                ➡️
+                            </button>
+                        </div>
+                        <div class="control-row" style="display: flex; justify-content: center;">
+                            <button class="control-btn enhanced-control-btn" data-direction="down" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 1rem;">
+                                ⬇️
+                            </button>
                         </div>
                     </div>
                     
-                    <!-- Bigger canvas for fullscreen -->
-                    <canvas id="fullscreenSnakeCanvas" width="600" height="600"></canvas>
-                    
-                    <!-- Fullscreen controls - only Exit button -->
-                    <div class="fullscreen-controls">
-                        <button id="exitFullscreenBtn" class="btn-primary">🚪 Exit Fullscreen</button>
+                    <!-- Game Control Buttons -->
+                    <div class="game-controls-enhanced" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 500px; margin: 0 auto;">
+                        <button id="fullscreenStartBtn" class="btn-primary enhanced-game-btn">
+                            ▶️ Start Game
+                        </button>
+                        <button id="fullscreenPauseBtn" class="btn-primary enhanced-game-btn">
+                            ⏸️ Pause
+                        </button>
+                        <button id="fullscreenResetBtn" class="btn-primary enhanced-game-btn">
+                            🔄 Reset
+                        </button>
+                        <button id="exitFullscreenBtn" class="btn-primary enhanced-game-btn" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                            🖥️ Exit
+                        </button>
                     </div>
                     
-                    <!-- Mobile controls ONLY in fullscreen -->
-                    <div class="mobile-controls">
-                        <p style="text-align: center; margin-bottom: 1rem; color: #666;">Use arrow keys or touch controls below:</p>
-                        <div class="control-row">
-                            <button class="control-btn" data-direction="up">⬆️</button>
-                        </div>
-                        <div class="control-row">
-                            <button class="control-btn" data-direction="left">⬅️</button>
-                            <button class="control-btn" data-direction="right">➡️</button>
-                        </div>
-                        <div class="control-row">
-                            <button class="control-btn" data-direction="down">⬇️</button>
-                        </div>
-                    </div>
-                    
-                    <div class="game-instructions">
-                        <p><strong>Controls:</strong> Arrow Keys or Touch Buttons | <strong>Goal:</strong> Eat food, avoid self-collision!</p>
+                    <!-- Game Instructions -->
+                    <div class="game-instructions" style="margin-top: 2rem; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px;">
+                        <h4 style="margin-bottom: 0.5rem; color: #2c3e50;">How to Play:</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">
+                            Use <strong>Arrow Keys</strong> or tap the <strong>direction buttons</strong> to control the snake. 
+                            Eat the red food to grow and earn points. Avoid hitting yourself!
+                        </p>
                     </div>
                 </div>
             </div>
@@ -158,32 +171,22 @@
         const modal = document.getElementById('snakeModal');
         modal.style.display = 'block';
         
+        // Update project scores in modal
+        const projectScore = document.getElementById('projectScore').textContent;
+        const projectHighScore = document.getElementById('projectHighScore').textContent;
+        document.getElementById('fullscreenScore').textContent = projectScore;
+        document.getElementById('fullscreenHighScore').textContent = projectHighScore;
+        
         // Initialize fullscreen game
         setTimeout(() => {
             if (window.fullscreenSnakeGame) {
                 fullscreenSnakeGame.resetGame();
-                fullscreenSnakeGame.startGame(); // Auto-start in fullscreen
             }
         }, 100);
     }
 
     // Close modal when clicking X
     document.addEventListener('DOMContentLoaded', function() {
-        const closeModal = document.querySelector('.close-modal');
-        if (closeModal) {
-            closeModal.addEventListener('click', function() {
-                document.getElementById('snakeModal').style.display = 'none';
-            });
-        }
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('snakeModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
         // Exit fullscreen button
         const exitBtn = document.getElementById('exitFullscreenBtn');
         if (exitBtn) {
@@ -192,7 +195,20 @@
             });
         }
 
+        // Update project page scores from localStorage
+        const highScore = localStorage.getItem('snakeHighScore') || '0';
+        document.getElementById('projectHighScore').textContent = highScore;
+        document.getElementById('fullscreenHighScore').textContent = highScore;
+
         console.log('Projects page loaded successfully!');
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('snakeModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 </script>
 

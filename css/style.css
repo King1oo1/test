@@ -1427,7 +1427,6 @@ body {
 
 
 
-
 /* ===== PROJECTS PAGE ENHANCEMENTS ===== */
 
 /* Featured Project Styling */
@@ -1760,5 +1759,97 @@ body {
     
     .featured-project {
         grid-column: 1 / -1;
+    }
+}
+
+/* ===== ENHANCED SNAKE GAME STYLES ===== */
+
+.enhanced-control-btn {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+}
+
+.enhanced-control-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+}
+
+.enhanced-control-btn:active {
+    transform: scale(0.95);
+}
+
+.enhanced-game-btn {
+    padding: 1rem 1.5rem !important;
+    font-size: 1.1rem !important;
+    font-weight: bold !important;
+    border-radius: 12px !important;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.simple-game-section {
+    border: 2px solid #3498db;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.simple-game-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+}
+
+/* Responsive design for mobile controls */
+@media (max-width: 768px) {
+    .enhanced-control-btn {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 1.8rem !important;
+    }
+    
+    .game-controls-enhanced {
+        grid-template-columns: 1fr !important;
+        gap: 0.8rem !important;
+    }
+    
+    .enhanced-game-btn {
+        padding: 0.8rem 1.2rem !important;
+        font-size: 1rem !important;
+        min-height: 50px;
+    }
+    
+    #fullscreenSnakeCanvas {
+        width: 400px !important;
+        height: 400px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .enhanced-control-btn {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 1.5rem !important;
+    }
+    
+    #fullscreenSnakeCanvas {
+        width: 350px !important;
+        height: 350px !important;
+    }
+    
+    .score-display {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+        text-align: center;
     }
 }
