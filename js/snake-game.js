@@ -1,14 +1,15 @@
 
 // snake-game.js - Classic Snake Game Implementation
 class SnakeGame {
-    constructor(canvasId, scoreId, highScoreId) {
+    constructor(canvasId, scoreId, highScoreId, isFullscreen = false) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
         this.scoreElement = document.getElementById(scoreId);
         this.highScoreElement = document.getElementById(highScoreId);
+        this.isFullscreen = isFullscreen;
         
-        // Game settings - MUCH SLOWER SPEED
-        this.gridSize = 20;
+        // Game settings - MUCH SLOWER SPEED and BIGGER SIZES
+        this.gridSize = this.isFullscreen ? 30 : 25; // Bigger grid for fullscreen
         this.tileCount = this.canvas.width / this.gridSize;
         this.gameSpeed = 200; // Much slower - increased from 150ms to 200ms
         
@@ -42,15 +43,13 @@ class SnakeGame {
             document.getElementById(resetBtnId).addEventListener('click', () => this.resetGame());
         }
         
-        // Mobile touch controls - only for fullscreen mode
-        if (this.canvas.id === 'fullscreenSnakeCanvas') {
-            document.querySelectorAll('.control-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const direction = e.target.dataset.direction;
-                    this.handleDirection(direction);
-                });
+        // Mobile touch controls
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const direction = e.target.dataset.direction;
+                this.handleDirection(direction);
             });
-        }
+        });
         
         console.log('Snake game event listeners setup complete');
     }
@@ -104,7 +103,7 @@ class SnakeGame {
         // Calculate new head position
         const head = { x: this.snake[0].x + this.dx, y: this.snake[0].y + this.dy };
         
-        // WRAP AROUND THE SCREEN INSTEAD OF WALL COLLISION
+        // WRAP AROUND THE SCREEN
         if (head.x < 0) head.x = this.tileCount - 1;
         if (head.x >= this.tileCount) head.x = 0;
         if (head.y < 0) head.y = this.tileCount - 1;
@@ -150,7 +149,7 @@ class SnakeGame {
             this.ctx.stroke();
         }
         
-        // Draw snake
+        // Draw snake with BIGGER size
         this.snake.forEach((segment, index) => {
             if (index === 0) {
                 // Head - different color
@@ -158,26 +157,21 @@ class SnakeGame {
             } else {
                 this.ctx.fillStyle = '#27ae60';
             }
-            this.ctx.fillRect(segment.x * this.gridSize, segment.y * this.gridSize, this.gridSize - 2, this.gridSize - 2);
+            // Bigger snake segments
+            this.ctx.fillRect(segment.x * this.gridSize, segment.y * this.gridSize, this.gridSize - 1, this.gridSize - 1);
         });
         
-        // Draw food - make it bigger and more visible
+        // Draw food with BIGGER size
         this.ctx.fillStyle = '#e74c3c';
         this.ctx.beginPath();
         this.ctx.arc(
             this.food.x * this.gridSize + this.gridSize / 2,
             this.food.y * this.gridSize + this.gridSize / 2,
-            this.gridSize / 2 - 1, // Slightly bigger food
+            this.gridSize / 2 - 1, // Bigger food
             0,
             2 * Math.PI
         );
         this.ctx.fill();
-        
-        // Add glow effect to food
-        this.ctx.shadowColor = '#e74c3c';
-        this.ctx.shadowBlur = 10;
-        this.ctx.fill();
-        this.ctx.shadowBlur = 0;
     }
     
     generateFood() {
@@ -189,7 +183,6 @@ class SnakeGame {
                 y: Math.floor(Math.random() * this.tileCount)
             };
             attempts++;
-            // Prevent infinite loop
             if (attempts > 100) break;
         } while (this.snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
         
@@ -294,18 +287,18 @@ class SnakeGame {
         }
         
         // Draw game over screen
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 28px Arial';
+        this.ctx.font = 'bold 24px Arial';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 40);
+        this.ctx.fillText('GAME OVER', this.canvas.width / 2, this.canvas.height / 2 - 30);
         
-        this.ctx.font = '20px Arial';
+        this.ctx.font = '18px Arial';
         this.ctx.fillText(`Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2);
-        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 30);
-        this.ctx.fillText('Click Reset to play again', this.canvas.width / 2, this.canvas.height / 2 + 70);
+        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 25);
+        this.ctx.fillText('Click Reset to play again', this.canvas.width / 2, this.canvas.height / 2 + 55);
         
         console.log('Game Over - Score:', this.score);
     }
@@ -316,18 +309,14 @@ let snakeGame;
 let fullscreenSnakeGame;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Main projects page snake game
-    snakeGame = new SnakeGame('snakeCanvas', 'snakeScore', 'snakeHighScore');
-    snakeGame.setupEventListeners('startSnakeBtn', 'pauseSnakeBtn', 'resetSnakeBtn');
-    
-    // Fullscreen modal snake game
-    fullscreenSnakeGame = new SnakeGame('fullscreenSnakeCanvas', 'fullscreenSnakeScore', 'fullscreenSnakeHighScore');
+    // Only initialize fullscreen game - no embedded game on projects page
+    fullscreenSnakeGame = new SnakeGame('fullscreenSnakeCanvas', 'fullscreenScore', 'fullscreenHighScore', true);
     fullscreenSnakeGame.setupEventListeners('fullscreenStartBtn', 'fullscreenPauseBtn', 'fullscreenResetBtn');
     
-    console.log('Snake games initialized successfully!');
+    console.log('Fullscreen Snake game initialized successfully!');
 });
 
 // Global functions for HTML onclick attributes
-window.startSnakeGame = () => snakeGame.startGame();
-window.pauseSnakeGame = () => snakeGame.pauseGame();
-window.resetSnakeGame = () => snakeGame.resetGame();
+window.startSnakeGame = () => fullscreenSnakeGame.startGame();
+window.pauseSnakeGame = () => fullscreenSnakeGame.pauseGame();
+window.resetSnakeGame = () => fullscreenSnakeGame.resetGame();
