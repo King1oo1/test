@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,7 @@
         <h1>My Projects</h1>
         
         <div class="projects-grid">
+            <!-- Learning Journal PWA Project -->
             <article class="project-card">
                 <h2>Learning Journal PWA</h2>
                 <p>A Progressive Web App that documents my learning journey through the Mobile Application Development course. This project demonstrates responsive design, mobile-first approach, clean code structure using HTML, CSS, and JavaScript, with interactive features like theme switching and dynamic content.</p>
@@ -27,6 +29,72 @@
                     <span class="tech-tag">CSS Grid</span>
                 </div>
             </article>
+
+            <!-- Snake Game Project -->
+            <article class="project-card featured-project">
+                <div class="project-badge">🎮 Interactive</div>
+                <h2>Classic Snake Game</h2>
+                <p>A modern implementation of the classic Snake game using HTML5 Canvas and JavaScript. Features smooth controls, score tracking, high score persistence, and responsive design that works on both desktop and mobile devices.</p>
+                
+                <!-- Snake Game Embed -->
+                <div class="game-embed">
+                    <div class="snake-game-container">
+                        <div class="game-header">
+                            <div class="score-board">
+                                <div>Score: <span id="snakeScore">0</span></div>
+                                <div>High Score: <span id="snakeHighScore">0</span></div>
+                            </div>
+                        </div>
+                        
+                        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+                        
+                        <div class="game-controls">
+                            <button id="startSnakeBtn" class="btn-primary">▶️ Start Game</button>
+                            <button id="pauseSnakeBtn" class="btn-primary">⏸️ Pause</button>
+                            <button id="resetSnakeBtn" class="btn-primary">🔄 Reset</button>
+                            <button onclick="openSnakeFullscreen()" class="btn-primary">🖥️ Fullscreen</button>
+                        </div>
+                        
+                        <!-- Mobile Touch Controls (Hidden by default, shown on mobile) -->
+                        <div class="mobile-controls">
+                            <div class="control-row">
+                                <button class="control-btn" data-direction="up">⬆️</button>
+                            </div>
+                            <div class="control-row">
+                                <button class="control-btn" data-direction="left">⬅️</button>
+                                <button class="control-btn" data-direction="right">➡️</button>
+                            </div>
+                            <div class="control-row">
+                                <button class="control-btn" data-direction="down">⬇️</button>
+                            </div>
+                        </div>
+                        
+                        <div class="game-instructions">
+                            <h4>How to Play:</h4>
+                            <ul>
+                                <li>Use <strong>Arrow Keys</strong> or <strong>Swipe</strong> to control the snake</li>
+                                <li>Eat the red food to grow and earn points</li>
+                                <li>Avoid hitting walls and yourself</li>
+                                <li>Try to beat your high score!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">HTML5 Canvas</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Game Development</span>
+                    <span class="tech-tag">Object-Oriented Programming</span>
+                    <span class="tech-tag">Local Storage</span>
+                    <span class="tech-tag">Mobile Controls</span>
+                </div>
+                
+                <div class="project-links">
+                    <button onclick="openSnakeFullscreen()" class="btn-primary">🎮 Play Snake Game</button>
+                    <button onclick="viewSourceCode()" class="btn-primary">📝 View Source Code</button>
+                </div>
+            </article>
         </div>
 
         <!-- Fullscreen Snake Game Modal -->
@@ -35,6 +103,12 @@
                 <span class="close-modal">&times;</span>
                 <div class="fullscreen-game-container">
                     <h3>🐍 Snake Game - Fullscreen</h3>
+                    <div class="game-header">
+                        <div class="score-board">
+                            <div>Score: <span id="fullscreenSnakeScore">0</span></div>
+                            <div>High Score: <span id="fullscreenSnakeHighScore">0</span></div>
+                        </div>
+                    </div>
                     <canvas id="fullscreenSnakeCanvas" width="600" height="600"></canvas>
                     <div class="fullscreen-controls">
                         <button id="fullscreenStartBtn" class="btn-primary">▶️ Start</button>
@@ -42,8 +116,37 @@
                         <button id="fullscreenResetBtn" class="btn-primary">🔄 Reset</button>
                         <button id="exitFullscreenBtn" class="btn-primary">🚪 Exit</button>
                     </div>
+                    
+                    <!-- Mobile controls for fullscreen -->
+                    <div class="mobile-controls">
+                        <div class="control-row">
+                            <button class="control-btn" data-direction="up">⬆️</button>
+                        </div>
+                        <div class="control-row">
+                            <button class="control-btn" data-direction="left">⬅️</button>
+                            <button class="control-btn" data-direction="right">➡️</button>
+                        </div>
+                        <div class="control-row">
+                            <button class="control-btn" data-direction="down">⬇️</button>
+                        </div>
+                    </div>
+                    
+                    <div class="game-instructions">
+                        <p><strong>Controls:</strong> Arrow Keys or Swipe | <strong>Goal:</strong> Eat food, avoid collisions!</p>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Upcoming Projects Section -->
+        <div class="upcoming-projects">
+            <h4>🚀 Upcoming Projects</h4>
+            <ul>
+                <li><strong>Weather App</strong> - Real-time weather information with location detection</li>
+                <li><strong>Task Manager</strong> - Advanced todo app with drag-and-drop functionality</li>
+                <li><strong>E-commerce Demo</strong> - Shopping cart with product filtering and payment integration</li>
+                <li><strong>Chat Application</strong> - Real-time messaging with WebSocket technology</li>
+            </ul>
         </div>
 
         <div class="coming-soon">
@@ -61,36 +164,37 @@
 <script src="js/browser.js"></script>
 <script src="js/thirdparty.js"></script>
 <script src="js/script.js"></script>
- <script src="js/snake-game.js"></script> <!-- New Snake Game JS -->
+<script src="js/snake-game.js"></script> <!-- Snake Game JS -->
 
+<!-- Projects Page Specific JavaScript -->
+<script>
+    // Projects page functionality
+    function openSnakeFullscreen() {
+        const modal = document.getElementById('snakeModal');
+        modal.style.display = 'block';
+        
+        // Initialize fullscreen game
+        setTimeout(() => {
+            if (window.fullscreenSnakeGame) {
+                fullscreenSnakeGame.resetGame();
+            }
+        }, 100);
+    }
 
+    function viewSourceCode() {
+        alert('Source code for the Snake game is available in the js/snake-game.js file!');
+        // In a real scenario, you might link to GitHub
+        // window.open('https://github.com/yourusername/learning-journal/blob/main/js/snake-game.js', '_blank');
+    }
 
-
- <!-- Projects Page Specific JavaScript -->
-    <script>
-        // Projects page functionality
-        function openSnakeFullscreen() {
-            const modal = document.getElementById('snakeModal');
-            modal.style.display = 'block';
-            
-            // Initialize fullscreen game
-            setTimeout(() => {
-                if (window.fullscreenSnakeGame) {
-                    fullscreenSnakeGame.resetGame();
-                }
-            }, 100);
+    // Close modal when clicking X
+    document.addEventListener('DOMContentLoaded', function() {
+        const closeModal = document.querySelector('.close-modal');
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                document.getElementById('snakeModal').style.display = 'none';
+            });
         }
-
-        function viewSourceCode() {
-            alert('Source code for the Snake game is available in the js/snake-game.js file!');
-            // In a real scenario, you might link to GitHub
-            // window.open('https://github.com/yourusername/learning-journal/blob/main/js/snake-game.js', '_blank');
-        }
-
-        // Close modal when clicking X
-        document.querySelector('.close-modal').addEventListener('click', function() {
-            document.getElementById('snakeModal').style.display = 'none';
-        });
 
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
@@ -101,22 +205,16 @@
         });
 
         // Exit fullscreen button
-        document.getElementById('exitFullscreenBtn').addEventListener('click', function() {
-            document.getElementById('snakeModal').style.display = 'none';
-        });
+        const exitBtn = document.getElementById('exitFullscreenBtn');
+        if (exitBtn) {
+            exitBtn.addEventListener('click', function() {
+                document.getElementById('snakeModal').style.display = 'none';
+            });
+        }
 
-        // Initialize projects page
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Projects page loaded successfully!');
-            
-            // Any projects page specific initialization
-            if (window.snakeGame) {
-                console.log('Snake game initialized on projects page');
-            }
-        });
-    </script>
-
-
+        console.log('Projects page loaded successfully!');
+    });
+</script>
 
 </body>
 </html>
