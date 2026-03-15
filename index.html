@@ -3,182 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latvian words · flag animation</title>
+    <title>Cartoon Latvia · flag animation</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* avoid selecting words during animation */
+            user-select: none;
         }
 
         body {
-            background: #2b2b2b;
+            background: #2d4a3b;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            margin: 0;
+            font-family: 'Comic Neue', 'Segoe UI', cursive, sans-serif;
             padding: 20px;
+            margin: 0;
         }
 
+        /* cartoon paper effect */
         .paper {
-            background: #1a1a1a;
+            background: #fbf3d5;
             padding: 30px 20px 20px 20px;
-            border-radius: 2rem 2rem 1.5rem 1.5rem;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.6), 0 0 0 2px #A77B55 inset;
+            border-radius: 80px 80px 40px 40px;
+            box-shadow: 0 20px 0 #ac8e68, 0 30px 30px rgba(0,0,0,0.4), inset 0 -8px 0 #e3c9a0;
+            border: 6px solid #ffcf9a;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transform: rotate(0.5deg);
         }
 
-        h2 {
-            font-weight: 300;
-            letter-spacing: 4px;
-            color: #e0d6c0;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            text-shadow: 2px 2px 0 #3e2e1f;
-            font-size: 1.7rem;
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #471c0c;
+            text-shadow: 4px 4px 0 #ffb882, 6px 6px 0 #7b4f2e;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            word-break: break-word;
+            text-align: center;
+            line-height: 1.1;
+            transform: rotate(-1deg);
         }
 
-        h2 span {
-            color: #C8372D;
-            font-weight: 600;
-            background: #f2eee7;
-            padding: 0 12px;
-            border-radius: 40px;
+        h1 span {
+            background: #fef5af;
+            padding: 0 25px;
+            border-radius: 100px;
+            display: inline-block;
+            border: 4px solid #ca762b;
+            box-shadow: 0 6px 0 #985f28;
         }
 
+        /* flag container with hand-drawn border */
         .flag-container {
             position: relative;
-            width: 800px;
-            height: 500px;
+            width: 960px;      /* 12 columns * 80px */
+            height: 500px;      /* 5 rows * 100px */
             background: linear-gradient(
                 180deg,
-                #C8372D 0%,      /* Latvian red (top) */
+                #C8372D 0%,
                 #C8372D 40%,
                 #FFFFFF 40%,
                 #FFFFFF 60%,
                 #C8372D 60%,
                 #C8372D 100%
             );
-            border-radius: 24px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 4px 0 #9C6B4A inset, 0 -4px 0 #4F3322 inset;
-            overflow: hidden;
+            border-radius: 50px 50px 30px 30px;
+            box-shadow: 0 12px 0 #6e3c1d, 0 18px 25px black, inset 0 -8px 0 #ffb27e, inset 0 8px 10px #ffe395;
+            border: 8px solid #ffb156;
             margin-bottom: 25px;
-            border: 3px solid #deb887;
+            image-rendering: crisp-edges;
+            overflow: hidden;
         }
 
-        .word {
+        /* cartoon symbol style */
+        .cartoon {
             position: absolute;
             left: 0;
             top: 0;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 42px;          /* big & cartoony */
+            line-height: 1;
             white-space: nowrap;
-            padding: 4px 8px;
-            border-radius: 30px;
-            background-color: rgba(0, 0, 0, 0.1); /* very subtle background for readability while floating */
-            backdrop-filter: blur(1px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            transition: left 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1),
-                        top 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1),
-                        transform 0.9s ease-out;
+            text-shadow: 3px 3px 0 #33333380, 0 0 10px #fff9d0;
+            filter: drop-shadow(0 6px 3px rgba(0,0,0,0.3));
+            transition: left 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2),    /* bounce */
+                        top 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2),
+                        transform 1s ease-out;
             will-change: left, top, transform;
-            pointer-events: none;  /* so they don't block button */
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            opacity: 0.95;
+            pointer-events: none;
+            transform-origin: center;
+            opacity: 0.97;
         }
 
-        /* color classes are set directly by js, but we define base */
-        .word.red-stripe {
-            color: white;
-        }
-        .word.white-stripe {
-            color: #C8372D; /* red on white stripe */
+        /* slight variation for symbols on white stripe – add a thin outline */
+        .cartoon.white-bg {
+            filter: drop-shadow(3px 3px 0 #33333380) drop-shadow(0 0 6px #ffb47b);
         }
 
-        .controls {
-            display: flex;
-            gap: 25px;
+        .cartoon.red-bg {
+            filter: drop-shadow(3px 3px 0 #1f0e00) drop-shadow(0 0 8px #ffeaa0);
         }
 
-        button {
-            background: #f3e9d2;
-            border: none;
-            padding: 16px 40px;
-            font-size: 1.6rem;
-            font-weight: 600;
-            border-radius: 60px;
-            color: #2d1508;
-            letter-spacing: 2px;
-            box-shadow: 0 6px 0 #8B5A2B, 0 8px 18px black;
-            cursor: pointer;
-            transition: 0.07s linear;
-            border: 1px solid #e3c184;
+        /* extra cartoon wiggle on hover (just for fun) */
+        .flag-container:hover .cartoon {
+            animation: wobble 0.4s infinite alternate ease-in-out;
+        }
+
+        @keyframes wobble {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            100% { transform: translate(-50%, -50%) rotate(2deg) scale(1.05); }
+        }
+
+        /* button with cartoon style */
+        .controls button {
+            background: #fedb9f;
+            border: 6px solid #d48d4b;
+            padding: 18px 50px;
+            font-size: 2.4rem;
+            font-weight: bold;
+            font-family: 'Comic Neue', cursive;
+            border-radius: 120px;
+            color: #2a1b0c;
             text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 0 12px 0 #9f6a3a, 0 14px 15px black;
+            cursor: pointer;
+            transition: 0.1s ease-out;
+            transform: rotate(-1deg);
         }
 
-        button:hover {
-            background: #ffe9c7;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 0 #8B5A2B, 0 12px 24px black;
+        .controls button:hover {
+            background: #ffeab3;
+            transform: translateY(-4px) rotate(-1deg);
+            box-shadow: 0 16px 0 #9f6a3a, 0 18px 25px black;
         }
 
-        button:active {
-            transform: translateY(6px);
-            box-shadow: 0 2px 0 #6b421f, 0 8px 18px black;
+        .controls button:active {
+            transform: translateY(8px) rotate(-1deg);
+            box-shadow: 0 6px 0 #7a4f28, 0 12px 20px black;
         }
 
         .footer-note {
-            color: #c7b295;
-            margin-top: 16px;
-            font-size: 1.2rem;
-            font-style: italic;
+            font-size: 1.8rem;
+            color: #482708;
+            background: #ffdbb5;
+            padding: 10px 40px;
+            border-radius: 60px;
+            margin-top: 20px;
+            border: 4px solid #af6d33;
+            font-weight: 600;
+            box-shadow: inset 0 -4px 0 #bd8b54;
         }
+
         .footer-note strong {
-            color: #fecb9e;
+            color: #b1302a;
+            font-size: 2rem;
         }
     </style>
 </head>
 <body>
 <div class="paper">
-    <h2>〈 <span>LATVIEŠU VĀRDI</span> 〉</h2>
+    <h1><span>✨ KARTOONI ✨</span></h1>
     <div id="flag" class="flag-container"></div>
     <div class="controls">
-        <button id="animateBtn">⚡ VEIDO KAROGU</button>
+        <button id="animateBtn">🎬 SAJAUCT & SAVIET</button>
     </div>
-    <div class="footer-note">vārdi kustas → <strong>sarkanbaltsarkanais</strong> raksts</div>
+    <div class="footer-note">latvijas <strong>🇱🇻 karogs</strong> no jautriem simboliem</div>
 </div>
 
 <script>
 (function() {
-    // ----- LATVIAN WORD BANK (50 words, authentic & varied) -----
-    const words = [
-        "Latvija", "Rīga", "Daugava", "Brīvība", "Mīla", "Saule", "Mēness", "Jūra", "Mežs",
-        "Pilsēta", "Valoda", "Ģimene", "Draugs", "Māja", "Ūdens", "Uguns", "Gaisma", "Tauta",
-        "Dziesma", "Deja", "Vēsture", "Kultūra", "Māksla", "Zeme", "Debess", "Vējš", "Lietus",
-        "Sniegs", "Ledus", "Koks", "Puķe", "Zāle", "Putns", "Zivs", "Dzīvnieks", "Cilvēks",
-        "Bērns", "Sieviete", "Vīrietis", "Darbs", "Miers", "Cerība", "Ticība", "Laime",
-        "Drosme", "Gudrība", "Spēks", "Vārds", "Grāmata", "Karogs", "Sarkanbaltsarkans",
-        "Brīvs", "Gauja", "Kurzeme", "Vidzeme", "Latgale", "Zemgale", "Rīgas", "Jūrmala",
-        "Cēsis", "Sigulda", "Tērvete", "Lāčplēsis", "Burtnieks", "Pērkons", "Laima"
-    ];  // more than 50, we'll slice to exactly 50
+    // ----- 30+ cartoonish emoji / symbols (Latvian flavour + playful) -----
+    const cartoonPool = [
+        "🐻", "🌲", "☀️", "🦉", "🏰", "🎵", "🇱🇻", "🌾", "🐺", "🦌",
+        "🐟", "🚣", "🌸", "🍂", "❄️", "⚽", "🎨", "📚", "🏡", "🍞",
+        "🧀", "🐕", "🐈", "🦆", "🐝", "🐞", "🌟", "🌙", "🌿", "🏹",
+        "🧸", "🍄", "🥨", "☕", "🎠", "💃", "🪕", "🥁", "🌻", "🐿️",
+        "🦊", "🦫", "🦢", "🐜", "⛪", "🏞️", "🚲", "🧣", "🧦", "🧤"
+    ]; // more than enough
 
-    const uniqueWords = [...new Set(words)].slice(0, 50);  // ensure 50 distinct (bank has >70)
+    // we need 60 symbols (12 columns x 5 rows)
+    const TOTAL_CELLS = 60;
+    const COL_COUNT = 12;
+    const ROW_COUNT = 5;   // 2 red / 1 white / 2 red
 
-    // ----- FLAG CONTAINER & SETTINGS -----
-    const container = document.getElementById('flag');
-    let colCount = 10;        // 10 columns
-    let rowCount = 5;         // 5 rows (2 red + 1 white + 2 red) = perfect 2:1:2
-    let cellW, cellH;
+    // make an array of 60 cartoons, repeat and shuffle
+    function generateCartoonSet() {
+        let items = [];
+        while (items.length < TOTAL_CELLS) {
+            // random pick from pool (with replacement) to get variety
+            const randomIndex = Math.floor(Math.random() * cartoonPool.length);
+            items.push(cartoonPool[randomIndex]);
+        }
+        // shuffle again to mix well
+        return shuffleArray(items);
+    }
 
-    // store created word elements and their target data
-    let wordElements = [];
-
-    // ----- helper: shuffle array (Fisher–Yates) -----
+    // shuffle utility
     function shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -187,187 +213,167 @@
         return arr;
     }
 
-    // ----- generate target grid positions (row, col) -----
+    // ----- create grid positions (row, col) for 5x12 -----
     function generateGridPositions() {
         const positions = [];
-        // rows 0,1 = top red ; row 2 = white ; rows 3,4 = bottom red
-        for (let r = 0; r < rowCount; r++) {
-            for (let c = 0; c < colCount; c++) {
+        for (let r = 0; r < ROW_COUNT; r++) {
+            for (let c = 0; c < COL_COUNT; c++) {
                 positions.push({ row: r, col: c });
             }
         }
-        return positions;  // 50 positions exactly
+        return positions;  // 60 positions
     }
 
-    // ----- main initialization / reset function -----
-    function initFlagAnimation() {
-        // Clear container and reset array
+    const container = document.getElementById('flag');
+    let cellW, cellH;
+    let cartoonElements = [];
+
+    // ----- initialise / reset everything -----
+    function initCartoonFlag() {
         container.innerHTML = '';
-        wordElements = [];
+        cartoonElements = [];
 
-        // get current container dimensions (it might have changed, but we set fixed size in CSS)
         const containerRect = container.getBoundingClientRect();
-        const containerW = containerRect.width;
-        const containerH = containerRect.height;
-        cellW = containerW / colCount;
-        cellH = containerH / rowCount;
+        cellW = containerRect.width / COL_COUNT;
+        cellH = containerRect.height / ROW_COUNT;
 
-        // get grid positions (ordered by row)
-        const gridPositions = generateGridPositions(); // array of {row, col}
+        // generate target positions in order (row by row)
+        const gridPositions = generateGridPositions(); // length 60
 
-        // make a copy of words and shuffle them for random assignment
-        let shuffledWords = shuffleArray([...uniqueWords]);
+        // get 60 cartoon symbols (shuffled)
+        let cartoons = generateCartoonSet(); // array of 60 emoji
 
-        // assign each word to a grid cell (preserving grid order, but words are shuffled)
-        const assignments = [];
-        for (let i = 0; i < gridPositions.length; i++) {
-            const pos = gridPositions[i];
-            const wordText = shuffledWords[i % shuffledWords.length]; // safe, but we have exactly 50
-            assignments.push({
-                text: wordText,
-                row: pos.row,
-                col: pos.col,
-            });
-        }
+        // assign each position a cartoon (preserve order but we shuffle assignments later)
+        let assignments = gridPositions.map((pos, idx) => ({
+            symbol: cartoons[idx],
+            row: pos.row,
+            col: pos.col,
+        }));
 
-        // further shuffle assignments so that words are mixed within stripes? 
-        // we already shuffled words, but we might also shuffle assignments across whole grid? 
-        // We want the final arrangement to be random within the stripes but respecting stripe counts.
-        // currently assignments are in row-major order, so top row gets first 10 words etc.
-        // To mix better within each stripe, we can shuffle stripes separately.
-        // Let's regroup by stripe and shuffle inside each stripe.
+        // group by stripe to mix symbols randomly within each stripe
+        const topRed = assignments.filter(a => a.row === 0 || a.row === 1);
+        const white = assignments.filter(a => a.row === 2);
+        const bottomRed = assignments.filter(a => a.row === 3 || a.row === 4);
 
-        const topRedAssigns = assignments.filter(a => a.row === 0 || a.row === 1);
-        const whiteAssigns = assignments.filter(a => a.row === 2);
-        const bottomRedAssigns = assignments.filter(a => a.row === 3 || a.row === 4);
+        shuffleArray(topRed);
+        shuffleArray(white);
+        shuffleArray(bottomRed);
 
-        // shuffle each group
-        shuffleArray(topRedAssigns);
-        shuffleArray(whiteAssigns);
-        shuffleArray(bottomRedAssigns);
+        // combine back in stripe order (top red, white, bottom red)
+        const finalAssignments = [...topRed, ...white, ...bottomRed];
 
-        // combine back in stripe order (top red, white, bottom red) – but we want them still in stripe order, but random within stripe
-        const finalAssignments = [...topRedAssigns, ...whiteAssigns, ...bottomRedAssigns];
-
-        // Now create word spans
+        // now create DOM elements
         finalAssignments.forEach((item, index) => {
-            const wordSpan = document.createElement('span');
-            wordSpan.className = 'word';
-            wordSpan.textContent = item.text;
+            const span = document.createElement('span');
+            span.className = 'cartoon';
+            span.textContent = item.symbol;
 
-            // determine text color based on stripe (target row)
-            if (item.row === 2) {  // white stripe
-                wordSpan.classList.add('white-stripe');  // red text
-                // also set inline color as fallback
-                wordSpan.style.color = '#C8372D';
+            // add a modifier class based on stripe (for slight filter difference)
+            if (item.row === 2) {
+                span.classList.add('white-bg');   // on white stripe
             } else {
-                wordSpan.classList.add('red-stripe');    // white text
-                wordSpan.style.color = '#FFFFFF';
+                span.classList.add('red-bg');     // on red stripe
             }
 
-            // store target coordinates (center of the cell)
+            // target coordinates (center of cell)
             const targetLeft = item.col * cellW + cellW / 2;
             const targetTop = item.row * cellH + cellH / 2;
 
-            // set random initial position (anywhere inside container)
-            const randomLeft = Math.random() * containerW;
-            const randomTop = Math.random() * containerH;
-            // random rotation (-25deg .. 25deg) and slight scale (0.8..1.2)
-            const randomRotate = (Math.random() * 50 - 25); // deg
-            const randomScale = 0.8 + Math.random() * 0.7;  // 0.8 - 1.5
-            const initialTransform = `translate(-50%, -50%) rotate(${randomRotate}deg) scale(${randomScale})`;
+            // store target in dataset
+            span.dataset.targetLeft = targetLeft;
+            span.dataset.targetTop = targetTop;
+            span.dataset.targetRow = item.row;
 
-            // apply initial position & transform
-            wordSpan.style.left = randomLeft + 'px';
-            wordSpan.style.top = randomTop + 'px';
-            wordSpan.style.transform = initialTransform;
-            // add slight transition only for transform? no, we want smooth movement later.
-            // but we don't want transition during initial set. Remove transition temporarily.
-            wordSpan.style.transition = 'none';
+            // random initial position (anywhere inside container)
+            const randomLeft = Math.random() * containerRect.width;
+            const randomTop = Math.random() * containerRect.height;
+            // random rotation (-30deg .. 30deg) & scale (0.7..1.6) for messy look
+            const rot = (Math.random() * 60 - 30);
+            const scale = 0.7 + Math.random() * 0.9;
+            span.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
 
-            // attach data attributes to retrieve target later (optional)
-            wordSpan.dataset.targetLeft = targetLeft;
-            wordSpan.dataset.targetTop = targetTop;
-            wordSpan.dataset.targetRow = item.row;
+            // set initial left/top (no transition for instant set)
+            span.style.transition = 'none';
+            span.style.left = randomLeft + 'px';
+            span.style.top = randomTop + 'px';
 
-            container.appendChild(wordSpan);
-            wordElements.push(wordSpan);
+            container.appendChild(span);
+            cartoonElements.push(span);
         });
 
-        // force reflow to make sure initial styles are applied without transition
+        // force reflow to clear transition
         void container.offsetHeight;
 
-        // after a tiny moment, apply transition property to all words (so later animation works)
-        wordElements.forEach(el => {
-            el.style.transition = 'left 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1), top 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s ease-out';
-        });
-
-        // set a timeout to automatically move to flag after 1 second (to appreciate chaos)
+        // apply transitions after a tiny tick
         setTimeout(() => {
-            moveWordsToFlag();
-        }, 1000);
+            cartoonElements.forEach(el => {
+                el.style.transition = 'left 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2), top 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2), transform 1s ease-out';
+            });
+        }, 20);
+
+        // auto‑move to flag after 1.2 sec (so user sees chaos first)
+        setTimeout(() => {
+            moveToFlag();
+        }, 1200);
     }
 
-    // ----- function that animates words to their target flag positions -----
-    function moveWordsToFlag() {
-        wordElements.forEach((el, idx) => {
+    // ----- function: move all cartoons to target positions (flag) -----
+    function moveToFlag() {
+        cartoonElements.forEach((el, idx) => {
             const targetLeft = parseFloat(el.dataset.targetLeft);
             const targetTop = parseFloat(el.dataset.targetTop);
 
-            // add slight staggered delay (0.02s * index) for wave effect
-            const stagger = idx * 0.015;
-            el.style.transitionDelay = `${stagger}s, ${stagger}s, 0s`; // left, top, transform delays
+            // add staggered delay (max 0.5s) for wave effect
+            const delay = (idx % 12) * 0.02;  // column-based delay
+            el.style.transitionDelay = `${delay}s, ${delay}s, 0s`; // left, top, transform
 
-            // set target positions
+            // set target left & top
             el.style.left = targetLeft + 'px';
             el.style.top = targetTop + 'px';
-            // final transform: centered + no rotation + normal scale
+            // final transform: centered, no rotation, normal scale 1
             el.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1)';
         });
     }
 
-    // ----- reset to random positions (chaos) then optionally form flag again -----
-    function randomScatter() {
+    // ----- scatter them randomly again (but with transition to make it playful) -----
+    function scatterCartoons() {
         const containerW = container.clientWidth;
         const containerH = container.clientHeight;
 
-        wordElements.forEach((el, idx) => {
-            // new random coordinates
-            const randLeft = Math.random() * containerW;
-            const randTop = Math.random() * containerH;
-            const randomRotate = (Math.random() * 50 - 25);
-            const randomScale = 0.8 + Math.random() * 0.7;
-
-            // disable transition temporarily for instant jump? 
-            // but we want smooth scatter? we can do with transition to make it playful
-            // we'll keep transition but set new left/top – it will move smoothly.
-            // reset delay to zero
+        cartoonElements.forEach((el, idx) => {
+            // reset transition delay to zero for immediate movement
             el.style.transitionDelay = '0s, 0s, 0s';
-            el.style.left = randLeft + 'px';
-            el.style.top = randTop + 'px';
-            el.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg) scale(${randomScale})`;
+
+            const randomLeft = Math.random() * containerW;
+            const randomTop = Math.random() * containerH;
+            const rot = (Math.random() * 60 - 30);
+            const scale = 0.6 + Math.random() * 1.0;
+            el.style.left = randomLeft + 'px';
+            el.style.top = randomTop + 'px';
+            el.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
         });
     }
 
-    // ----- event listener for button: scatter then after short delay form flag -----
+    // ----- button handler: scatter then reassemble after short delay -----
     function handleButton() {
-        randomScatter();
-        // after scatter, wait a bit then reassemble
+        scatterCartoons();
+        // after scattering, call moveToFlag after a moment
         setTimeout(() => {
-            moveWordsToFlag();
-        }, 700); // a bit shorter for responsiveness
+            moveToFlag();
+        }, 700); // 0.7 sec of chaotic scatter then reassemble
     }
 
-    // ----- start everything after page load -----
+    // ----- start everything on load -----
     window.addEventListener('load', () => {
-        initFlagAnimation();
+        initCartoonFlag();
 
         const btn = document.getElementById('animateBtn');
         btn.addEventListener('click', handleButton);
     });
 
-    // optional: if window resizes, we might need to recalc? for simplicity we keep fixed size
-    // but we can add a resize recalc if needed – not necessary for demo.
+    // optional: if window resizes, we might need to recalc? but for demo we keep fixed size.
+    // but we can add a simple resize recalc? – we'll keep it fixed to avoid complexity.
+    // if you resize, reload.
 })();
 </script>
 </body>
