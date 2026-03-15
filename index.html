@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartoon Latvia · flag animation</title>
+    <title>love you broooo · animal parade</title>
     <style>
         * {
             margin: 0;
@@ -13,198 +13,234 @@
         }
 
         body {
-            background: #2d4a3b;
+            background: #1b4d3d;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Comic Neue', 'Segoe UI', cursive, sans-serif;
-            padding: 20px;
-            margin: 0;
+            font-family: 'Comic Neue', 'Chalkboard SE', cursive, sans-serif;
+            padding: 16px;
         }
 
-        /* cartoon paper effect */
+        /* fun paper background */
         .paper {
-            background: #fbf3d5;
-            padding: 30px 20px 20px 20px;
-            border-radius: 80px 80px 40px 40px;
-            box-shadow: 0 20px 0 #ac8e68, 0 30px 30px rgba(0,0,0,0.4), inset 0 -8px 0 #e3c9a0;
-            border: 6px solid #ffcf9a;
+            background: #fef7d5;
+            padding: 20px 20px 25px 20px;
+            border-radius: 100px 100px 60px 60px;
+            box-shadow: 0 20px 0 #ba9f7b, 0 30px 30px rgba(0,0,0,0.4), inset 0 -8px 0 #ecdba8;
+            border: 8px solid #fec382;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transform: rotate(0.5deg);
+            max-width: 1200px;
+            width: fit-content;
         }
 
-        h1 {
-            font-size: 3.2rem;
+        /* big love message */
+        .love-header {
+            font-size: 4rem;
             font-weight: 800;
-            color: #471c0c;
-            text-shadow: 4px 4px 0 #ffb882, 6px 6px 0 #7b4f2e;
-            margin-top: -15px;
-            margin-bottom: 15px;
+            color: #c0392b;
+            text-shadow: 6px 6px 0 #f3b45a, 8px 8px 0 #9a5e2b;
+            background: #fffbe3;
+            padding: 0.2rem 2rem;
+            border-radius: 200px;
+            margin-bottom: 20px;
+            border: 6px solid #e67e22;
+            transform: rotate(-2deg);
+            box-shadow: 0 10px 0 #b45f2b;
             letter-spacing: 2px;
-            word-break: break-word;
+            line-height: 1.2;
             text-align: center;
-            line-height: 1.1;
-            transform: rotate(-1deg);
         }
 
-        h1 span {
-            background: #fef5af;
-            padding: 0 25px;
-            border-radius: 100px;
+        .love-header span {
             display: inline-block;
-            border: 4px solid #ca762b;
-            box-shadow: 0 6px 0 #985f28;
+            transform: scale(1.1) rotate(3deg);
+            background: #ffe05c;
+            padding: 0 20px;
+            border-radius: 100px;
+            margin: 0 5px;
         }
 
-        /* flag container with hand-drawn border */
-        .flag-container {
+        /* container where animals live */
+        .stage {
             position: relative;
-            width: 960px;      /* 12 columns * 80px */
-            height: 500px;      /* 5 rows * 100px */
-            background: linear-gradient(
-                180deg,
-                #C8372D 0%,
-                #C8372D 40%,
-                #FFFFFF 40%,
-                #FFFFFF 60%,
-                #C8372D 60%,
-                #C8372D 100%
-            );
-            border-radius: 50px 50px 30px 30px;
-            box-shadow: 0 12px 0 #6e3c1d, 0 18px 25px black, inset 0 -8px 0 #ffb27e, inset 0 8px 10px #ffe395;
-            border: 8px solid #ffb156;
-            margin-bottom: 25px;
-            image-rendering: crisp-edges;
+            width: 1000px;      /* 23 columns * ~43px */
+            height: 320px;       /* 5 rows * 64px */
+            background: #aad4cf;
+            background-image: radial-gradient(circle at 30px 20px, #e3ffe2 3px, transparent 3px), 
+                              radial-gradient(circle at 80px 90px, #f9e79f 5px, transparent 5px);
+            background-size: 60px 60px, 140px 140px;
+            border-radius: 70px 70px 40px 40px;
+            box-shadow: 0 12px 0 #6b8f7c, inset 0 -8px 0 #c1e2d0, inset 0 8px 15px #fefee0;
+            border: 7px solid #ffc489;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
-        /* cartoon symbol style */
-        .cartoon {
+        /* animal emoji style */
+        .animal {
             position: absolute;
             left: 0;
             top: 0;
-            font-size: 42px;          /* big & cartoony */
+            font-size: 48px;       /* big cartoony */
             line-height: 1;
-            white-space: nowrap;
-            text-shadow: 3px 3px 0 #33333380, 0 0 10px #fff9d0;
-            filter: drop-shadow(0 6px 3px rgba(0,0,0,0.3));
-            transition: left 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2),    /* bounce */
-                        top 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2),
+            text-shadow: 4px 4px 0 #4a2e1e, 1px 1px 0 white;
+            filter: drop-shadow(0 10px 5px #3f2e1e99);
+            transition: left 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2), 
+                        top 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2),
                         transform 1s ease-out;
             will-change: left, top, transform;
             pointer-events: none;
             transform-origin: center;
-            opacity: 0.97;
+            opacity: 0.98;
         }
 
-        /* slight variation for symbols on white stripe – add a thin outline */
-        .cartoon.white-bg {
-            filter: drop-shadow(3px 3px 0 #33333380) drop-shadow(0 0 6px #ffb47b);
+        /* random slight variation for cuteness */
+        .animal:nth-child(odd) {
+            filter: drop-shadow(0 12px 5px #2d4a1e);
         }
 
-        .cartoon.red-bg {
-            filter: drop-shadow(3px 3px 0 #1f0e00) drop-shadow(0 0 8px #ffeaa0);
-        }
-
-        /* extra cartoon wiggle on hover (just for fun) */
-        .flag-container:hover .cartoon {
-            animation: wobble 0.4s infinite alternate ease-in-out;
-        }
-
-        @keyframes wobble {
-            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-            100% { transform: translate(-50%, -50%) rotate(2deg) scale(1.05); }
-        }
-
-        /* button with cartoon style */
-        .controls button {
-            background: #fedb9f;
-            border: 6px solid #d48d4b;
-            padding: 18px 50px;
-            font-size: 2.4rem;
+        /* button style */
+        .love-button {
+            background: #f3c26b;
+            border: 6px solid #b46f32;
+            padding: 16px 50px;
+            font-size: 3rem;
             font-weight: bold;
             font-family: 'Comic Neue', cursive;
-            border-radius: 120px;
-            color: #2a1b0c;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            box-shadow: 0 12px 0 #9f6a3a, 0 14px 15px black;
-            cursor: pointer;
-            transition: 0.1s ease-out;
-            transform: rotate(-1deg);
-        }
-
-        .controls button:hover {
-            background: #ffeab3;
-            transform: translateY(-4px) rotate(-1deg);
-            box-shadow: 0 16px 0 #9f6a3a, 0 18px 25px black;
-        }
-
-        .controls button:active {
-            transform: translateY(8px) rotate(-1deg);
-            box-shadow: 0 6px 0 #7a4f28, 0 12px 20px black;
-        }
-
-        .footer-note {
-            font-size: 1.8rem;
-            color: #482708;
-            background: #ffdbb5;
-            padding: 10px 40px;
             border-radius: 60px;
-            margin-top: 20px;
-            border: 4px solid #af6d33;
-            font-weight: 600;
-            box-shadow: inset 0 -4px 0 #bd8b54;
+            color: #2f1d0b;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            box-shadow: 0 15px 0 #8f5729, 0 18px 20px black;
+            cursor: pointer;
+            transition: 0.1s linear;
+            transform: rotate(1deg);
+            margin: 15px 0 5px;
         }
 
-        .footer-note strong {
-            color: #b1302a;
+        .love-button:hover {
+            background: #ffd58c;
+            transform: translateY(-5px) rotate(1deg);
+            box-shadow: 0 20px 0 #8f5729, 0 22px 25px black;
+        }
+
+        .love-button:active {
+            transform: translateY(8px) rotate(1deg);
+            box-shadow: 0 7px 0 #6e421e, 0 15px 20px black;
+        }
+
+        .sub-message {
             font-size: 2rem;
+            color: #3d1b0a;
+            background: #ffdbb5;
+            padding: 0.5rem 2.5rem;
+            border-radius: 40px;
+            border: 4px solid #b1642b;
+            margin-top: 10px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 <div class="paper">
-    <h1><span>✨ KARTOONI ✨</span></h1>
-    <div id="flag" class="flag-container"></div>
-    <div class="controls">
-        <button id="animateBtn">🎬 SAJAUCT & SAVIET</button>
+    <div class="love-header">
+        ❤️ <span>LOVE YOU BROOOO</span> ❤️
     </div>
-    <div class="footer-note">latvijas <strong>🇱🇻 karogs</strong> no jautriem simboliem</div>
+
+    <!-- stage for animal parade -->
+    <div id="stage" class="stage"></div>
+
+    <button class="love-button" id="formLoveBtn">🐾 FORM LOVE 🐾</button>
+    <div class="sub-message">animals walk in line → L O V E</div>
 </div>
 
 <script>
 (function() {
-    // ----- 30+ cartoonish emoji / symbols (Latvian flavour + playful) -----
-    const cartoonPool = [
-        "🐻", "🌲", "☀️", "🦉", "🏰", "🎵", "🇱🇻", "🌾", "🐺", "🦌",
-        "🐟", "🚣", "🌸", "🍂", "❄️", "⚽", "🎨", "📚", "🏡", "🍞",
-        "🧀", "🐕", "🐈", "🦆", "🐝", "🐞", "🌟", "🌙", "🌿", "🏹",
-        "🧸", "🍄", "🥨", "☕", "🎠", "💃", "🪕", "🥁", "🌻", "🐿️",
-        "🦊", "🦫", "🦢", "🐜", "⛪", "🏞️", "🚲", "🧣", "🧦", "🧤"
-    ]; // more than enough
+    // ----- ANIMAL EMOJI (all about animals & cuteness) -----
+    const animalPool = [
+        "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯",
+        "🦁", "🐮", "🐸", "🐙", "🦄", "🐧", "🐦", "🐤", "🐣", "🐥",
+        "🦆", "🦅", "🦉", "🐺", "🐗", "🐴", "🦋", "🐌", "🐞", "🐝",
+        "🐛", "🦒", "🦘", "🦙", "🦥", "🦦", "🦨", "🦩", "🐿️", "🦔",
+        "🐲", "🐉", "🐋", "🦭", "🐊", "🐅", "🐆", "🦓", "🦍", "🐘"
+    ];
 
-    // we need 60 symbols (12 columns x 5 rows)
-    const TOTAL_CELLS = 60;
-    const COL_COUNT = 12;
-    const ROW_COUNT = 5;   // 2 red / 1 white / 2 red
+    // ----- LETTER MASKS FOR "LOVE" (5x5 each, separated by 1 column) -----
+    // Total grid: 23 columns x 5 rows (columns 0-22)
+    const L_mask = [
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,1,1,1,1]
+    ];
 
-    // make an array of 60 cartoons, repeat and shuffle
-    function generateCartoonSet() {
-        let items = [];
-        while (items.length < TOTAL_CELLS) {
-            // random pick from pool (with replacement) to get variety
-            const randomIndex = Math.floor(Math.random() * cartoonPool.length);
-            items.push(cartoonPool[randomIndex]);
-        }
-        // shuffle again to mix well
-        return shuffleArray(items);
+    const O_mask = [
+        [0,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [0,1,1,1,0]
+    ];
+
+    const V_mask = [
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [0,1,0,1,0],
+        [0,1,0,1,0],
+        [0,0,1,0,0]
+    ];
+
+    const E_mask = [
+        [1,1,1,1,1],
+        [1,0,0,0,0],
+        [1,1,1,1,1],
+        [1,0,0,0,0],
+        [1,1,1,1,1]
+    ];
+
+    // build target positions array (col, row) for each active cell
+    function buildLoveTargets() {
+        const targets = [];
+        const letters = [
+            { mask: L_mask, startCol: 0 },   // L cols 0-4
+            { mask: O_mask, startCol: 6 },   // O cols 6-10 (space col5)
+            { mask: V_mask, startCol: 12 },  // V cols 12-16 (space col11)
+            { mask: E_mask, startCol: 18 }   // E cols 18-22 (space col17)
+        ];
+
+        letters.forEach(letter => {
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 5; c++) {
+                    if (letter.mask[r][c] === 1) {
+                        targets.push({
+                            col: letter.startCol + c,
+                            row: r
+                        });
+                    }
+                }
+            }
+        });
+        return targets;  // array of {col, row}
     }
 
-    // shuffle utility
+    const targetPositions = buildLoveTargets();  // length = total active cells (should be 9+12+9+12 = 42? Actually L=9, O=12, V=9, E=12 => 42)
+    const ANIMAL_COUNT = targetPositions.length;
+
+    // prepare animal symbols (randomly picked from pool)
+    function generateAnimals() {
+        let animals = [];
+        for (let i = 0; i < ANIMAL_COUNT; i++) {
+            const randomIndex = Math.floor(Math.random() * animalPool.length);
+            animals.push(animalPool[randomIndex]);
+        }
+        // shuffle so they aren't in order
+        return shuffleArray(animals);
+    }
+
     function shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -213,167 +249,119 @@
         return arr;
     }
 
-    // ----- create grid positions (row, col) for 5x12 -----
-    function generateGridPositions() {
-        const positions = [];
-        for (let r = 0; r < ROW_COUNT; r++) {
-            for (let c = 0; c < COL_COUNT; c++) {
-                positions.push({ row: r, col: c });
-            }
-        }
-        return positions;  // 60 positions
-    }
-
-    const container = document.getElementById('flag');
+    // ----- DOM setup -----
+    const stage = document.getElementById('stage');
+    let animalElements = [];
     let cellW, cellH;
-    let cartoonElements = [];
 
-    // ----- initialise / reset everything -----
-    function initCartoonFlag() {
-        container.innerHTML = '';
-        cartoonElements = [];
+    // initialise everything
+    function initAnimalParade() {
+        stage.innerHTML = '';
+        animalElements = [];
 
-        const containerRect = container.getBoundingClientRect();
-        cellW = containerRect.width / COL_COUNT;
-        cellH = containerRect.height / ROW_COUNT;
+        const stageRect = stage.getBoundingClientRect();
+        cellW = stageRect.width / 23;   // 23 columns
+        cellH = stageRect.height / 5;    // 5 rows
 
-        // generate target positions in order (row by row)
-        const gridPositions = generateGridPositions(); // length 60
+        const animals = generateAnimals(); // array of emoji strings, length = 42
 
-        // get 60 cartoon symbols (shuffled)
-        let cartoons = generateCartoonSet(); // array of 60 emoji
+        // assign each animal a target (positions are already in grid order but we mix)
+        // shuffle targetPositions to make assignment random
+        const shuffledTargets = shuffleArray([...targetPositions]);
 
-        // assign each position a cartoon (preserve order but we shuffle assignments later)
-        let assignments = gridPositions.map((pos, idx) => ({
-            symbol: cartoons[idx],
-            row: pos.row,
-            col: pos.col,
-        }));
+        for (let i = 0; i < ANIMAL_COUNT; i++) {
+            const target = shuffledTargets[i];
+            const animalSpan = document.createElement('span');
+            animalSpan.className = 'animal';
+            animalSpan.textContent = animals[i];
 
-        // group by stripe to mix symbols randomly within each stripe
-        const topRed = assignments.filter(a => a.row === 0 || a.row === 1);
-        const white = assignments.filter(a => a.row === 2);
-        const bottomRed = assignments.filter(a => a.row === 3 || a.row === 4);
+            // target pixel coordinates (center of cell)
+            const targetLeft = target.col * cellW + cellW / 2;
+            const targetTop = target.row * cellH + cellH / 2;
 
-        shuffleArray(topRed);
-        shuffleArray(white);
-        shuffleArray(bottomRed);
+            // store in dataset
+            animalSpan.dataset.targetLeft = targetLeft;
+            animalSpan.dataset.targetTop = targetTop;
+            animalSpan.dataset.targetCol = target.col;
+            animalSpan.dataset.targetRow = target.row;
 
-        // combine back in stripe order (top red, white, bottom red)
-        const finalAssignments = [...topRed, ...white, ...bottomRed];
+            // random initial position (scattered all over stage)
+            const randomLeft = Math.random() * stageRect.width;
+            const randomTop = Math.random() * stageRect.height;
+            const randomRotate = (Math.random() * 60 - 30);
+            const randomScale = 0.7 + Math.random() * 0.8; // 0.7 - 1.5
+            animalSpan.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg) scale(${randomScale})`;
+            animalSpan.style.transition = 'none';
+            animalSpan.style.left = randomLeft + 'px';
+            animalSpan.style.top = randomTop + 'px';
 
-        // now create DOM elements
-        finalAssignments.forEach((item, index) => {
-            const span = document.createElement('span');
-            span.className = 'cartoon';
-            span.textContent = item.symbol;
+            stage.appendChild(animalSpan);
+            animalElements.push(animalSpan);
+        }
 
-            // add a modifier class based on stripe (for slight filter difference)
-            if (item.row === 2) {
-                span.classList.add('white-bg');   // on white stripe
-            } else {
-                span.classList.add('red-bg');     // on red stripe
-            }
-
-            // target coordinates (center of cell)
-            const targetLeft = item.col * cellW + cellW / 2;
-            const targetTop = item.row * cellH + cellH / 2;
-
-            // store target in dataset
-            span.dataset.targetLeft = targetLeft;
-            span.dataset.targetTop = targetTop;
-            span.dataset.targetRow = item.row;
-
-            // random initial position (anywhere inside container)
-            const randomLeft = Math.random() * containerRect.width;
-            const randomTop = Math.random() * containerRect.height;
-            // random rotation (-30deg .. 30deg) & scale (0.7..1.6) for messy look
-            const rot = (Math.random() * 60 - 30);
-            const scale = 0.7 + Math.random() * 0.9;
-            span.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
-
-            // set initial left/top (no transition for instant set)
-            span.style.transition = 'none';
-            span.style.left = randomLeft + 'px';
-            span.style.top = randomTop + 'px';
-
-            container.appendChild(span);
-            cartoonElements.push(span);
+        // force reflow, then add transitions (so they are ready for later)
+        void stage.offsetHeight;
+        animalElements.forEach(el => {
+            el.style.transition = 'left 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2), top 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2), transform 1s ease-out';
         });
 
-        // force reflow to clear transition
-        void container.offsetHeight;
-
-        // apply transitions after a tiny tick
-        setTimeout(() => {
-            cartoonElements.forEach(el => {
-                el.style.transition = 'left 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2), top 1.2s cubic-bezier(0.34, 1.7, 0.64, 1.2), transform 1s ease-out';
-            });
-        }, 20);
-
-        // auto‑move to flag after 1.2 sec (so user sees chaos first)
-        setTimeout(() => {
-            moveToFlag();
-        }, 1200);
+        // optional: after 1.5 sec automatically form love? maybe not, user wants button.
+        // but we do nothing, wait for button.
     }
 
-    // ----- function: move all cartoons to target positions (flag) -----
-    function moveToFlag() {
-        cartoonElements.forEach((el, idx) => {
+    // function to move all animals to their LOVE target positions
+    function formLove() {
+        animalElements.forEach((el, idx) => {
             const targetLeft = parseFloat(el.dataset.targetLeft);
             const targetTop = parseFloat(el.dataset.targetTop);
 
-            // add staggered delay (max 0.5s) for wave effect
-            const delay = (idx % 12) * 0.02;  // column-based delay
-            el.style.transitionDelay = `${delay}s, ${delay}s, 0s`; // left, top, transform
+            // add a staggered delay based on column (makes them walk in line from left to right)
+            const col = parseInt(el.dataset.targetCol) || 0;
+            const delay = col * 0.03; // max ~0.66s
 
-            // set target left & top
+            el.style.transitionDelay = `${delay}s, ${delay}s, 0s`; // left, top, transform
             el.style.left = targetLeft + 'px';
             el.style.top = targetTop + 'px';
-            // final transform: centered, no rotation, normal scale 1
             el.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1)';
         });
     }
 
-    // ----- scatter them randomly again (but with transition to make it playful) -----
-    function scatterCartoons() {
-        const containerW = container.clientWidth;
-        const containerH = container.clientHeight;
+    // scatter randomly again (with bounce)
+    function scatterRandomly() {
+        const stageW = stage.clientWidth;
+        const stageH = stage.clientHeight;
 
-        cartoonElements.forEach((el, idx) => {
-            // reset transition delay to zero for immediate movement
+        animalElements.forEach(el => {
+            // reset delay
             el.style.transitionDelay = '0s, 0s, 0s';
-
-            const randomLeft = Math.random() * containerW;
-            const randomTop = Math.random() * containerH;
+            const randLeft = Math.random() * stageW;
+            const randTop = Math.random() * stageH;
             const rot = (Math.random() * 60 - 30);
             const scale = 0.6 + Math.random() * 1.0;
-            el.style.left = randomLeft + 'px';
-            el.style.top = randomTop + 'px';
+            el.style.left = randLeft + 'px';
+            el.style.top = randTop + 'px';
             el.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
         });
     }
 
-    // ----- button handler: scatter then reassemble after short delay -----
+    // button click: first scatter for fun, then after short delay form LOVE
     function handleButton() {
-        scatterCartoons();
-        // after scattering, call moveToFlag after a moment
+        scatterRandomly();  // animals go crazy
         setTimeout(() => {
-            moveToFlag();
-        }, 700); // 0.7 sec of chaotic scatter then reassemble
+            formLove();      // then line up to say LOVE
+        }, 700);
     }
 
-    // ----- start everything on load -----
+    // start everything when page loads
     window.addEventListener('load', () => {
-        initCartoonFlag();
+        initAnimalParade();
 
-        const btn = document.getElementById('animateBtn');
+        const btn = document.getElementById('formLoveBtn');
         btn.addEventListener('click', handleButton);
+
+        // bonus: you can also click again to replay
     });
 
-    // optional: if window resizes, we might need to recalc? but for demo we keep fixed size.
-    // but we can add a simple resize recalc? – we'll keep it fixed to avoid complexity.
-    // if you resize, reload.
 })();
 </script>
 </body>
