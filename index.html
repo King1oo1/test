@@ -3,69 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chandandeep Singh - Learning Journal</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Latvian words · flag animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* avoid selecting words during animation */
+        }
+
+        body {
+            background: #2b2b2b;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .paper {
+            background: #1a1a1a;
+            padding: 30px 20px 20px 20px;
+            border-radius: 2rem 2rem 1.5rem 1.5rem;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.6), 0 0 0 2px #A77B55 inset;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: #e0d6c0;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 0 #3e2e1f;
+            font-size: 1.7rem;
+        }
+
+        h2 span {
+            color: #C8372D;
+            font-weight: 600;
+            background: #f2eee7;
+            padding: 0 12px;
+            border-radius: 40px;
+        }
+
+        .flag-container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            background: linear-gradient(
+                180deg,
+                #C8372D 0%,      /* Latvian red (top) */
+                #C8372D 40%,
+                #FFFFFF 40%,
+                #FFFFFF 60%,
+                #C8372D 60%,
+                #C8372D 100%
+            );
+            border-radius: 24px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 4px 0 #9C6B4A inset, 0 -4px 0 #4F3322 inset;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 3px solid #deb887;
+        }
+
+        .word {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 18px;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 4px 8px;
+            border-radius: 30px;
+            background-color: rgba(0, 0, 0, 0.1); /* very subtle background for readability while floating */
+            backdrop-filter: blur(1px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: left 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1),
+                        top 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1),
+                        transform 0.9s ease-out;
+            will-change: left, top, transform;
+            pointer-events: none;  /* so they don't block button */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            opacity: 0.95;
+        }
+
+        /* color classes are set directly by js, but we define base */
+        .word.red-stripe {
+            color: white;
+        }
+        .word.white-stripe {
+            color: #C8372D; /* red on white stripe */
+        }
+
+        .controls {
+            display: flex;
+            gap: 25px;
+        }
+
+        button {
+            background: #f3e9d2;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            border-radius: 60px;
+            color: #2d1508;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 0 #8B5A2B, 0 8px 18px black;
+            cursor: pointer;
+            transition: 0.07s linear;
+            border: 1px solid #e3c184;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background: #ffe9c7;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #8B5A2B, 0 12px 24px black;
+        }
+
+        button:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #6b421f, 0 8px 18px black;
+        }
+
+        .footer-note {
+            color: #c7b295;
+            margin-top: 16px;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        .footer-note strong {
+            color: #fecb9e;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation will be inserted here by JavaScript -->
-    
-    <main class="container">
-        <section class="hero">
-            <h1>Welcome to My Learning Journal</h1>
-            <p>This is my personal space where I document my journey through the Mobile Application Development course and showcase my projects.</p>
-            <div class="live-date">
-                <strong>Today's Date:</strong> <span id="live-date"></span>
-            </div>
-            <button id="theme-toggle" class="theme-btn">🌙 Dark Mode</button>
-        </section>
+<div class="paper">
+    <h2>〈 <span>LATVIEŠU VĀRDI</span> 〉</h2>
+    <div id="flag" class="flag-container"></div>
+    <div class="controls">
+        <button id="animateBtn">⚡ VEIDO KAROGU</button>
+    </div>
+    <div class="footer-note">vārdi kustas → <strong>sarkanbaltsarkanais</strong> raksts</div>
+</div>
 
-        <section class="recent-posts">
-            <h2>Recent Journal Entries</h2>
-            <div class="posts-grid">
+<script>
+(function() {
+    // ----- LATVIAN WORD BANK (50 words, authentic & varied) -----
+    const words = [
+        "Latvija", "Rīga", "Daugava", "Brīvība", "Mīla", "Saule", "Mēness", "Jūra", "Mežs",
+        "Pilsēta", "Valoda", "Ģimene", "Draugs", "Māja", "Ūdens", "Uguns", "Gaisma", "Tauta",
+        "Dziesma", "Deja", "Vēsture", "Kultūra", "Māksla", "Zeme", "Debess", "Vējš", "Lietus",
+        "Sniegs", "Ledus", "Koks", "Puķe", "Zāle", "Putns", "Zivs", "Dzīvnieks", "Cilvēks",
+        "Bērns", "Sieviete", "Vīrietis", "Darbs", "Miers", "Cerība", "Ticība", "Laime",
+        "Drosme", "Gudrība", "Spēks", "Vārds", "Grāmata", "Karogs", "Sarkanbaltsarkans",
+        "Brīvs", "Gauja", "Kurzeme", "Vidzeme", "Latgale", "Zemgale", "Rīgas", "Jūrmala",
+        "Cēsis", "Sigulda", "Tērvete", "Lāčplēsis", "Burtnieks", "Pērkons", "Laima"
+    ];  // more than 50, we'll slice to exactly 50
 
-                
-                <!-- Week 5: Python & JSON Backend (NEWEST) -->
-                <article class="post-card">
-                    <h3>Week 5: Python & JSON Backend</h3>
-                    <p>Integrated Python and JSON for backend data storage. Created a Python script to manage journal entries and display them in the PWA through JavaScript fetch API.</p>
-                    <a href="journal.html">Read more</a>
-                </article>
+    const uniqueWords = [...new Set(words)].slice(0, 50);  // ensure 50 distinct (bank has >70)
 
-                
-                 <article class="post-card">
-                    <h3>Week 4: Web APIs</h3>
-                    <p>Exploring Storage API, Browser APIs (Clipboard, Validation), and Third-Party APIs (YouTube). Learning to make web applications more powerful and interactive.</p>
-                    <a href="journal.html">Read more</a>
-                </article>
+    // ----- FLAG CONTAINER & SETTINGS -----
+    const container = document.getElementById('flag');
+    let colCount = 10;        // 10 columns
+    let rowCount = 5;         // 5 rows (2 red + 1 white + 2 red) = perfect 2:1:2
+    let cellW, cellH;
 
-                <article class="post-card">
-                    <h3>Week 3: JavaScript & DOM</h3>
-                    <p>Learning JavaScript DOM manipulation, event handling, and making web pages interactive. Exploring reusable navigation, theme switching, and form validation.</p>
-                    <a href="journal.html">Read more</a>
-                </article>
-                <article class="post-card">
-                    <h3>Week 2: Frontend Fundamentals</h3>
-                    <p>Exploring HTML, CSS, and responsive design principles for mobile applications. Mobile-first approach and Flexbox layout techniques.</p>
-                    <a href="journal.html">Read more</a>
-                </article>
-                <article class="post-card">
-                    <h3>Week 1: Introduction to Mobile Development</h3>
-                    <p>Getting started with mobile development concepts, Progressive Web Apps, and setting up the development environment and project structure.</p>
-                    <a href="journal.html">Read more</a>
-                </article>
-            </div>
-        </section>
-    </main>
+    // store created word elements and their target data
+    let wordElements = [];
 
-    <footer class="footer">
-        <p>&copy; 2025 Chandandeep Singh. All rights reserved.</p>
-    </footer>
+    // ----- helper: shuffle array (Fisher–Yates) -----
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
 
-  <!-- ALL THE JS FILES - IN CORRECT ORDER -->
-<script src="js/storage.js"></script>
-<script src="js/browser.js"></script>
-<script src="js/thirdparty.js"></script>
-<script src="js/script.js"></script>
+    // ----- generate target grid positions (row, col) -----
+    function generateGridPositions() {
+        const positions = [];
+        // rows 0,1 = top red ; row 2 = white ; rows 3,4 = bottom red
+        for (let r = 0; r < rowCount; r++) {
+            for (let c = 0; c < colCount; c++) {
+                positions.push({ row: r, col: c });
+            }
+        }
+        return positions;  // 50 positions exactly
+    }
 
+    // ----- main initialization / reset function -----
+    function initFlagAnimation() {
+        // Clear container and reset array
+        container.innerHTML = '';
+        wordElements = [];
+
+        // get current container dimensions (it might have changed, but we set fixed size in CSS)
+        const containerRect = container.getBoundingClientRect();
+        const containerW = containerRect.width;
+        const containerH = containerRect.height;
+        cellW = containerW / colCount;
+        cellH = containerH / rowCount;
+
+        // get grid positions (ordered by row)
+        const gridPositions = generateGridPositions(); // array of {row, col}
+
+        // make a copy of words and shuffle them for random assignment
+        let shuffledWords = shuffleArray([...uniqueWords]);
+
+        // assign each word to a grid cell (preserving grid order, but words are shuffled)
+        const assignments = [];
+        for (let i = 0; i < gridPositions.length; i++) {
+            const pos = gridPositions[i];
+            const wordText = shuffledWords[i % shuffledWords.length]; // safe, but we have exactly 50
+            assignments.push({
+                text: wordText,
+                row: pos.row,
+                col: pos.col,
+            });
+        }
+
+        // further shuffle assignments so that words are mixed within stripes? 
+        // we already shuffled words, but we might also shuffle assignments across whole grid? 
+        // We want the final arrangement to be random within the stripes but respecting stripe counts.
+        // currently assignments are in row-major order, so top row gets first 10 words etc.
+        // To mix better within each stripe, we can shuffle stripes separately.
+        // Let's regroup by stripe and shuffle inside each stripe.
+
+        const topRedAssigns = assignments.filter(a => a.row === 0 || a.row === 1);
+        const whiteAssigns = assignments.filter(a => a.row === 2);
+        const bottomRedAssigns = assignments.filter(a => a.row === 3 || a.row === 4);
+
+        // shuffle each group
+        shuffleArray(topRedAssigns);
+        shuffleArray(whiteAssigns);
+        shuffleArray(bottomRedAssigns);
+
+        // combine back in stripe order (top red, white, bottom red) – but we want them still in stripe order, but random within stripe
+        const finalAssignments = [...topRedAssigns, ...whiteAssigns, ...bottomRedAssigns];
+
+        // Now create word spans
+        finalAssignments.forEach((item, index) => {
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'word';
+            wordSpan.textContent = item.text;
+
+            // determine text color based on stripe (target row)
+            if (item.row === 2) {  // white stripe
+                wordSpan.classList.add('white-stripe');  // red text
+                // also set inline color as fallback
+                wordSpan.style.color = '#C8372D';
+            } else {
+                wordSpan.classList.add('red-stripe');    // white text
+                wordSpan.style.color = '#FFFFFF';
+            }
+
+            // store target coordinates (center of the cell)
+            const targetLeft = item.col * cellW + cellW / 2;
+            const targetTop = item.row * cellH + cellH / 2;
+
+            // set random initial position (anywhere inside container)
+            const randomLeft = Math.random() * containerW;
+            const randomTop = Math.random() * containerH;
+            // random rotation (-25deg .. 25deg) and slight scale (0.8..1.2)
+            const randomRotate = (Math.random() * 50 - 25); // deg
+            const randomScale = 0.8 + Math.random() * 0.7;  // 0.8 - 1.5
+            const initialTransform = `translate(-50%, -50%) rotate(${randomRotate}deg) scale(${randomScale})`;
+
+            // apply initial position & transform
+            wordSpan.style.left = randomLeft + 'px';
+            wordSpan.style.top = randomTop + 'px';
+            wordSpan.style.transform = initialTransform;
+            // add slight transition only for transform? no, we want smooth movement later.
+            // but we don't want transition during initial set. Remove transition temporarily.
+            wordSpan.style.transition = 'none';
+
+            // attach data attributes to retrieve target later (optional)
+            wordSpan.dataset.targetLeft = targetLeft;
+            wordSpan.dataset.targetTop = targetTop;
+            wordSpan.dataset.targetRow = item.row;
+
+            container.appendChild(wordSpan);
+            wordElements.push(wordSpan);
+        });
+
+        // force reflow to make sure initial styles are applied without transition
+        void container.offsetHeight;
+
+        // after a tiny moment, apply transition property to all words (so later animation works)
+        wordElements.forEach(el => {
+            el.style.transition = 'left 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1), top 1.4s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s ease-out';
+        });
+
+        // set a timeout to automatically move to flag after 1 second (to appreciate chaos)
+        setTimeout(() => {
+            moveWordsToFlag();
+        }, 1000);
+    }
+
+    // ----- function that animates words to their target flag positions -----
+    function moveWordsToFlag() {
+        wordElements.forEach((el, idx) => {
+            const targetLeft = parseFloat(el.dataset.targetLeft);
+            const targetTop = parseFloat(el.dataset.targetTop);
+
+            // add slight staggered delay (0.02s * index) for wave effect
+            const stagger = idx * 0.015;
+            el.style.transitionDelay = `${stagger}s, ${stagger}s, 0s`; // left, top, transform delays
+
+            // set target positions
+            el.style.left = targetLeft + 'px';
+            el.style.top = targetTop + 'px';
+            // final transform: centered + no rotation + normal scale
+            el.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1)';
+        });
+    }
+
+    // ----- reset to random positions (chaos) then optionally form flag again -----
+    function randomScatter() {
+        const containerW = container.clientWidth;
+        const containerH = container.clientHeight;
+
+        wordElements.forEach((el, idx) => {
+            // new random coordinates
+            const randLeft = Math.random() * containerW;
+            const randTop = Math.random() * containerH;
+            const randomRotate = (Math.random() * 50 - 25);
+            const randomScale = 0.8 + Math.random() * 0.7;
+
+            // disable transition temporarily for instant jump? 
+            // but we want smooth scatter? we can do with transition to make it playful
+            // we'll keep transition but set new left/top – it will move smoothly.
+            // reset delay to zero
+            el.style.transitionDelay = '0s, 0s, 0s';
+            el.style.left = randLeft + 'px';
+            el.style.top = randTop + 'px';
+            el.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg) scale(${randomScale})`;
+        });
+    }
+
+    // ----- event listener for button: scatter then after short delay form flag -----
+    function handleButton() {
+        randomScatter();
+        // after scatter, wait a bit then reassemble
+        setTimeout(() => {
+            moveWordsToFlag();
+        }, 700); // a bit shorter for responsiveness
+    }
+
+    // ----- start everything after page load -----
+    window.addEventListener('load', () => {
+        initFlagAnimation();
+
+        const btn = document.getElementById('animateBtn');
+        btn.addEventListener('click', handleButton);
+    });
+
+    // optional: if window resizes, we might need to recalc? for simplicity we keep fixed size
+    // but we can add a resize recalc if needed – not necessary for demo.
+})();
+</script>
 </body>
 </html>
