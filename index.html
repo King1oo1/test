@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>love you broooo · animal parade</title>
+    <title>love you bro · animal parade</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #1b4d3d;
+            background: #297a4d;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,222 +22,317 @@
             padding: 16px;
         }
 
-        /* fun paper background */
+        /* cartoon meadow paper */
         .paper {
-            background: #fef7d5;
-            padding: 20px 20px 25px 20px;
-            border-radius: 100px 100px 60px 60px;
-            box-shadow: 0 20px 0 #ba9f7b, 0 30px 30px rgba(0,0,0,0.4), inset 0 -8px 0 #ecdba8;
-            border: 8px solid #fec382;
+            background: #fef6d8;
+            padding: 25px 25px 35px 25px;
+            border-radius: 120px 120px 70px 70px;
+            box-shadow: 0 20px 0 #af946a, 0 30px 35px rgba(0,0,0,0.4), inset 0 -10px 0 #ecd19b;
+            border: 8px solid #fec195;
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1400px;
             width: fit-content;
+            position: relative;
+        }
+
+        /* sun */
+        .sun {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 5rem;
+            filter: drop-shadow(0 10px 8px #f3b548);
+            z-index: 5;
+            transform: rotate(15deg);
         }
 
         /* big love message */
         .love-header {
-            font-size: 4rem;
+            font-size: 4.2rem;
             font-weight: 800;
-            color: #c0392b;
-            text-shadow: 6px 6px 0 #f3b45a, 8px 8px 0 #9a5e2b;
-            background: #fffbe3;
-            padding: 0.2rem 2rem;
+            color: #b52e1e;
+            text-shadow: 6px 6px 0 #fad165, 8px 8px 0 #9b632b;
+            background: #fffed0;
+            padding: 0.2rem 2.5rem;
             border-radius: 200px;
-            margin-bottom: 20px;
-            border: 6px solid #e67e22;
-            transform: rotate(-2deg);
-            box-shadow: 0 10px 0 #b45f2b;
-            letter-spacing: 2px;
-            line-height: 1.2;
+            margin-bottom: 15px;
+            border: 6px solid #e0852b;
+            transform: rotate(-1.5deg);
+            box-shadow: 0 12px 0 #b16029;
+            letter-spacing: 3px;
             text-align: center;
+            z-index: 10;
         }
 
         .love-header span {
             display: inline-block;
-            transform: scale(1.1) rotate(3deg);
-            background: #ffe05c;
-            padding: 0 20px;
-            border-radius: 100px;
-            margin: 0 5px;
+            background: #fefb9c;
+            padding: 0 25px;
+            border-radius: 80px;
+            margin: 0 8px;
+            transform: rotate(2deg) scale(1.05);
         }
 
-        /* container where animals live */
+        /* big stage where animals live */
         .stage {
             position: relative;
-            width: 1000px;      /* 23 columns * ~43px */
-            height: 320px;       /* 5 rows * 64px */
-            background: #aad4cf;
-            background-image: radial-gradient(circle at 30px 20px, #e3ffe2 3px, transparent 3px), 
-                              radial-gradient(circle at 80px 90px, #f9e79f 5px, transparent 5px);
-            background-size: 60px 60px, 140px 140px;
-            border-radius: 70px 70px 40px 40px;
-            box-shadow: 0 12px 0 #6b8f7c, inset 0 -8px 0 #c1e2d0, inset 0 8px 15px #fefee0;
-            border: 7px solid #ffc489;
-            margin-bottom: 20px;
+            width: 1300px;      /* 54 columns * ~24px */
+            height: 380px;       /* 5 rows * 76px */
+            background: #bde5b4;
+            background-image: radial-gradient(circle at 20% 30%, #9fd89f 8%, transparent 15%),
+                              radial-gradient(circle at 90% 70%, #c2f0b2 10%, transparent 20%),
+                              linear-gradient(0deg, #8bb56a 0%, #c9f0b0 100%);
+            border-radius: 90px 90px 50px 50px;
+            box-shadow: 0 15px 0 #61854b, inset 0 -10px 0 #c2e0a8, inset 0 10px 15px #ffffbb;
+            border: 7px solid #feb164;
+            margin-bottom: 25px;
             overflow: hidden;
+            cursor: pointer;
         }
 
-        /* animal emoji style */
+        /* grass tufts */
+        .stage::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: repeating-linear-gradient(45deg, #559944 0px, #559944 20px, #77bb66 20px, #77bb66 40px);
+            border-radius: 0 0 50px 50px;
+            opacity: 0.5;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* animal style */
         .animal {
             position: absolute;
             left: 0;
             top: 0;
-            font-size: 48px;       /* big cartoony */
+            font-size: 44px;       /* big & cartoony */
             line-height: 1;
-            text-shadow: 4px 4px 0 #4a2e1e, 1px 1px 0 white;
-            filter: drop-shadow(0 10px 5px #3f2e1e99);
-            transition: left 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2), 
-                        top 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2),
-                        transform 1s ease-out;
+            text-shadow: 3px 4px 0 #3f2e1e, 0 0 10px #fffbb0;
+            filter: drop-shadow(0 10px 5px #3b281a);
+            transition: left 1.2s cubic-bezier(0.25, 1.5, 0.5, 1.1), 
+                        top 1.2s cubic-bezier(0.25, 1.5, 0.5, 1.1),
+                        transform 0.9s ease-out;
             will-change: left, top, transform;
             pointer-events: none;
             transform-origin: center;
-            opacity: 0.98;
+            z-index: 10;
+            /* random wiggle animation (different for each) */
+            animation: wiggle 2.2s infinite alternate ease-in-out;
         }
 
-        /* random slight variation for cuteness */
+        /* wiggle effect – makes them look like they're dancing randomly */
+        @keyframes wiggle {
+            0% { transform: translate(-50%, -50%) rotate(-6deg) scale(0.95); }
+            100% { transform: translate(-50%, -50%) rotate(6deg) scale(1.1); }
+        }
+
+        /* individual timing variation */
         .animal:nth-child(odd) {
-            filter: drop-shadow(0 12px 5px #2d4a1e);
+            animation-duration: 1.8s;
+            animation-delay: -0.5s;
+        }
+        .animal:nth-child(3n) {
+            animation-duration: 2.5s;
+            animation-delay: -1.2s;
+        }
+        .animal:nth-child(5n+2) {
+            animation-duration: 3s;
+            animation-delay: -2s;
         }
 
         /* button style */
         .love-button {
-            background: #f3c26b;
-            border: 6px solid #b46f32;
-            padding: 16px 50px;
-            font-size: 3rem;
+            background: #fec75a;
+            border: 7px solid #c57728;
+            padding: 18px 60px;
+            font-size: 3.2rem;
             font-weight: bold;
             font-family: 'Comic Neue', cursive;
-            border-radius: 60px;
-            color: #2f1d0b;
+            border-radius: 70px;
+            color: #2e1b08;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            box-shadow: 0 15px 0 #8f5729, 0 18px 20px black;
+            letter-spacing: 6px;
+            box-shadow: 0 15px 0 #9e632e, 0 20px 25px black;
             cursor: pointer;
             transition: 0.1s linear;
             transform: rotate(1deg);
-            margin: 15px 0 5px;
+            margin: 10px 0 5px;
         }
 
         .love-button:hover {
-            background: #ffd58c;
+            background: #ffde8d;
             transform: translateY(-5px) rotate(1deg);
-            box-shadow: 0 20px 0 #8f5729, 0 22px 25px black;
+            box-shadow: 0 20px 0 #9e632e, 0 24px 30px black;
         }
 
         .love-button:active {
             transform: translateY(8px) rotate(1deg);
-            box-shadow: 0 7px 0 #6e421e, 0 15px 20px black;
+            box-shadow: 0 7px 0 #764a20, 0 16px 22px black;
         }
 
         .sub-message {
-            font-size: 2rem;
-            color: #3d1b0a;
-            background: #ffdbb5;
-            padding: 0.5rem 2.5rem;
-            border-radius: 40px;
-            border: 4px solid #b1642b;
-            margin-top: 10px;
+            font-size: 2.2rem;
+            color: #432708;
+            background: #feeac2;
+            padding: 0.5rem 2.8rem;
+            border-radius: 60px;
+            border: 5px solid #c17732;
+            margin-top: 15px;
             font-weight: 600;
+            box-shadow: inset 0 -5px 0 #b68b54;
+        }
+
+        .cloud {
+            position: absolute;
+            font-size: 6rem;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
 <div class="paper">
+    <div class="sun">☀️</div>
+    <div class="cloud" style="top: 20px; left: 10px;">☁️</div>
+    <div class="cloud" style="bottom: 50px; right: 20px; font-size: 8rem;">☁️</div>
+
     <div class="love-header">
-        ❤️ <span>LOVE YOU BROOOO</span> ❤️
+        ❤️ <span>LOVE YOU BRO</span> ❤️
     </div>
 
-    <!-- stage for animal parade -->
+    <!-- stage for animals -->
     <div id="stage" class="stage"></div>
 
-    <button class="love-button" id="formLoveBtn">🐾 FORM LOVE 🐾</button>
-    <div class="sub-message">animals walk in line → L O V E</div>
+    <button class="love-button" id="formBtn">🐾 FORM THE PHRASE 🐾</button>
+    <div class="sub-message">animals walk in line → "love you bro"</div>
 </div>
 
 <script>
 (function() {
-    // ----- ANIMAL EMOJI (all about animals & cuteness) -----
+    // ----- 5x5 LETTER MASKS (1 = animal, 0 = empty) -----
+    const masks = {
+        L: [
+            [1,0,0,0,0],
+            [1,0,0,0,0],
+            [1,0,0,0,0],
+            [1,0,0,0,0],
+            [1,1,1,1,1]
+        ],
+        O: [
+            [0,1,1,1,0],
+            [1,0,0,0,1],
+            [1,0,0,0,1],
+            [1,0,0,0,1],
+            [0,1,1,1,0]
+        ],
+        V: [
+            [1,0,0,0,1],
+            [1,0,0,0,1],
+            [0,1,0,1,0],
+            [0,1,0,1,0],
+            [0,0,1,0,0]
+        ],
+        E: [
+            [1,1,1,1,1],
+            [1,0,0,0,0],
+            [1,1,1,1,1],
+            [1,0,0,0,0],
+            [1,1,1,1,1]
+        ],
+        Y: [
+            [1,0,0,0,1],
+            [0,1,0,1,0],
+            [0,0,1,0,0],
+            [0,0,1,0,0],
+            [0,0,1,0,0]
+        ],
+        U: [
+            [1,0,0,0,1],
+            [1,0,0,0,1],
+            [1,0,0,0,1],
+            [1,0,0,0,1],
+            [0,1,1,1,0]
+        ],
+        B: [
+            [1,1,1,1,0],
+            [1,0,0,0,1],
+            [1,1,1,1,0],
+            [1,0,0,0,1],
+            [1,1,1,1,0]
+        ],
+        R: [
+            [1,1,1,1,0],
+            [1,0,0,0,1],
+            [1,1,1,1,0],
+            [1,0,1,0,0],
+            [1,0,0,1,0]
+        ]
+    };
+
+    // ----- order of letters for "LOVE YOU BRO" (with word gaps) -----
+    const letterSequence = [
+        'L','O','V','E', 
+        'gap', 'gap',      // two columns between words
+        'Y','O','U',
+        'gap', 'gap',
+        'B','R','O'
+    ];
+
+    // total columns = (5 per letter) * 10 letters + 4 gap columns = 50 + 4 = 54
+    const COLS = 54;
+    const ROWS = 5;
+
+    // generate target positions (col, row) for every active cell
+    function buildTargets() {
+        let targets = [];
+        let currentCol = 0;
+
+        for (let item of letterSequence) {
+            if (item === 'gap') {
+                currentCol += 2;   // two empty columns (gap)
+                continue;
+            }
+            const mask = masks[item];
+            if (!mask) continue;
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < 5; c++) {
+                    if (mask[r][c] === 1) {
+                        targets.push({ col: currentCol + c, row: r });
+                    }
+                }
+            }
+            currentCol += 5;   // move past this letter (no gap between letters)
+        }
+        return targets;  // length 114 (as computed)
+    }
+
+    const targetPositions = buildTargets();
+    const ANIMAL_COUNT = targetPositions.length; // = 114
+
+    // ----- ANIMAL EMOJI (lots of cute creatures) -----
     const animalPool = [
         "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯",
         "🦁", "🐮", "🐸", "🐙", "🦄", "🐧", "🐦", "🐤", "🐣", "🐥",
         "🦆", "🦅", "🦉", "🐺", "🐗", "🐴", "🦋", "🐌", "🐞", "🐝",
         "🐛", "🦒", "🦘", "🦙", "🦥", "🦦", "🦨", "🦩", "🐿️", "🦔",
-        "🐲", "🐉", "🐋", "🦭", "🐊", "🐅", "🐆", "🦓", "🦍", "🐘"
+        "🐲", "🐉", "🐋", "🦭", "🐊", "🐅", "🐆", "🦓", "🦍", "🐘",
+        "🐫", "🦣", "🦫", "🐕", "🐈", "🦜", "🐓", "🦢", "🐇", "🦝"
     ];
 
-    // ----- LETTER MASKS FOR "LOVE" (5x5 each, separated by 1 column) -----
-    // Total grid: 23 columns x 5 rows (columns 0-22)
-    const L_mask = [
-        [1,0,0,0,0],
-        [1,0,0,0,0],
-        [1,0,0,0,0],
-        [1,0,0,0,0],
-        [1,1,1,1,1]
-    ];
-
-    const O_mask = [
-        [0,1,1,1,0],
-        [1,0,0,0,1],
-        [1,0,0,0,1],
-        [1,0,0,0,1],
-        [0,1,1,1,0]
-    ];
-
-    const V_mask = [
-        [1,0,0,0,1],
-        [1,0,0,0,1],
-        [0,1,0,1,0],
-        [0,1,0,1,0],
-        [0,0,1,0,0]
-    ];
-
-    const E_mask = [
-        [1,1,1,1,1],
-        [1,0,0,0,0],
-        [1,1,1,1,1],
-        [1,0,0,0,0],
-        [1,1,1,1,1]
-    ];
-
-    // build target positions array (col, row) for each active cell
-    function buildLoveTargets() {
-        const targets = [];
-        const letters = [
-            { mask: L_mask, startCol: 0 },   // L cols 0-4
-            { mask: O_mask, startCol: 6 },   // O cols 6-10 (space col5)
-            { mask: V_mask, startCol: 12 },  // V cols 12-16 (space col11)
-            { mask: E_mask, startCol: 18 }   // E cols 18-22 (space col17)
-        ];
-
-        letters.forEach(letter => {
-            for (let r = 0; r < 5; r++) {
-                for (let c = 0; c < 5; c++) {
-                    if (letter.mask[r][c] === 1) {
-                        targets.push({
-                            col: letter.startCol + c,
-                            row: r
-                        });
-                    }
-                }
-            }
-        });
-        return targets;  // array of {col, row}
-    }
-
-    const targetPositions = buildLoveTargets();  // length = total active cells (should be 9+12+9+12 = 42? Actually L=9, O=12, V=9, E=12 => 42)
-    const ANIMAL_COUNT = targetPositions.length;
-
-    // prepare animal symbols (randomly picked from pool)
     function generateAnimals() {
         let animals = [];
         for (let i = 0; i < ANIMAL_COUNT; i++) {
-            const randomIndex = Math.floor(Math.random() * animalPool.length);
-            animals.push(animalPool[randomIndex]);
+            animals.push(animalPool[Math.floor(Math.random() * animalPool.length)]);
         }
-        // shuffle so they aren't in order
         return shuffleArray(animals);
     }
 
@@ -249,93 +344,81 @@
         return arr;
     }
 
-    // ----- DOM setup -----
+    // ----- DOM SETUP -----
     const stage = document.getElementById('stage');
     let animalElements = [];
     let cellW, cellH;
 
-    // initialise everything
-    function initAnimalParade() {
+    function initParade() {
         stage.innerHTML = '';
         animalElements = [];
 
-        const stageRect = stage.getBoundingClientRect();
-        cellW = stageRect.width / 23;   // 23 columns
-        cellH = stageRect.height / 5;    // 5 rows
+        const rect = stage.getBoundingClientRect();
+        cellW = rect.width / COLS;
+        cellH = rect.height / ROWS;
 
-        const animals = generateAnimals(); // array of emoji strings, length = 42
-
-        // assign each animal a target (positions are already in grid order but we mix)
-        // shuffle targetPositions to make assignment random
-        const shuffledTargets = shuffleArray([...targetPositions]);
+        const animals = generateAnimals();          // array of 114 emoji
+        const shuffledTargets = shuffleArray([...targetPositions]); // mix assignment
 
         for (let i = 0; i < ANIMAL_COUNT; i++) {
-            const target = shuffledTargets[i];
-            const animalSpan = document.createElement('span');
-            animalSpan.className = 'animal';
-            animalSpan.textContent = animals[i];
+            const t = shuffledTargets[i];
+            const span = document.createElement('span');
+            span.className = 'animal';
+            span.textContent = animals[i];
 
             // target pixel coordinates (center of cell)
-            const targetLeft = target.col * cellW + cellW / 2;
-            const targetTop = target.row * cellH + cellH / 2;
+            const targetLeft = t.col * cellW + cellW / 2;
+            const targetTop = t.row * cellH + cellH / 2;
 
-            // store in dataset
-            animalSpan.dataset.targetLeft = targetLeft;
-            animalSpan.dataset.targetTop = targetTop;
-            animalSpan.dataset.targetCol = target.col;
-            animalSpan.dataset.targetRow = target.row;
+            span.dataset.targetLeft = targetLeft;
+            span.dataset.targetTop = targetTop;
+            span.dataset.targetCol = t.col;
+            span.dataset.targetRow = t.row;
 
-            // random initial position (scattered all over stage)
-            const randomLeft = Math.random() * stageRect.width;
-            const randomTop = Math.random() * stageRect.height;
-            const randomRotate = (Math.random() * 60 - 30);
-            const randomScale = 0.7 + Math.random() * 0.8; // 0.7 - 1.5
-            animalSpan.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg) scale(${randomScale})`;
-            animalSpan.style.transition = 'none';
-            animalSpan.style.left = randomLeft + 'px';
-            animalSpan.style.top = randomTop + 'px';
+            // random initial position (scattered all over)
+            const randLeft = Math.random() * rect.width;
+            const randTop = Math.random() * rect.height;
+            const rot = (Math.random() * 60 - 30);
+            const scale = 0.7 + Math.random() * 0.9;
+            span.style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
+            span.style.transition = 'none';   // no transition during setup
+            span.style.left = randLeft + 'px';
+            span.style.top = randTop + 'px';
 
-            stage.appendChild(animalSpan);
-            animalElements.push(animalSpan);
+            stage.appendChild(span);
+            animalElements.push(span);
         }
 
-        // force reflow, then add transitions (so they are ready for later)
+        // force reflow then restore transitions
         void stage.offsetHeight;
         animalElements.forEach(el => {
-            el.style.transition = 'left 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2), top 1.3s cubic-bezier(0.25, 1.3, 0.5, 1.2), transform 1s ease-out';
+            el.style.transition = 'left 1.2s cubic-bezier(0.25, 1.5, 0.5, 1.1), top 1.2s cubic-bezier(0.25, 1.5, 0.5, 1.1), transform 0.9s ease-out';
         });
-
-        // optional: after 1.5 sec automatically form love? maybe not, user wants button.
-        // but we do nothing, wait for button.
     }
 
-    // function to move all animals to their LOVE target positions
-    function formLove() {
-        animalElements.forEach((el, idx) => {
+    // ----- move animals to LOVE-YOU-BRO positions -----
+    function formPhrase() {
+        animalElements.forEach(el => {
             const targetLeft = parseFloat(el.dataset.targetLeft);
             const targetTop = parseFloat(el.dataset.targetTop);
-
-            // add a staggered delay based on column (makes them walk in line from left to right)
             const col = parseInt(el.dataset.targetCol) || 0;
-            const delay = col * 0.03; // max ~0.66s
-
-            el.style.transitionDelay = `${delay}s, ${delay}s, 0s`; // left, top, transform
+            // staggered delay based on column (left to right wave)
+            const delay = col * 0.02; // max ~1.08s
+            el.style.transitionDelay = `${delay}s, ${delay}s, 0s`;
             el.style.left = targetLeft + 'px';
             el.style.top = targetTop + 'px';
             el.style.transform = 'translate(-50%, -50%) rotate(0deg) scale(1)';
         });
     }
 
-    // scatter randomly again (with bounce)
-    function scatterRandomly() {
-        const stageW = stage.clientWidth;
-        const stageH = stage.clientHeight;
-
+    // ----- scatter randomly (with bounce) -----
+    function scatterRandom() {
+        const w = stage.clientWidth;
+        const h = stage.clientHeight;
         animalElements.forEach(el => {
-            // reset delay
-            el.style.transitionDelay = '0s, 0s, 0s';
-            const randLeft = Math.random() * stageW;
-            const randTop = Math.random() * stageH;
+            el.style.transitionDelay = '0s,0s,0s';
+            const randLeft = Math.random() * w;
+            const randTop = Math.random() * h;
             const rot = (Math.random() * 60 - 30);
             const scale = 0.6 + Math.random() * 1.0;
             el.style.left = randLeft + 'px';
@@ -344,24 +427,21 @@
         });
     }
 
-    // button click: first scatter for fun, then after short delay form LOVE
+    // button action: scatter then form phrase after short delay
     function handleButton() {
-        scatterRandomly();  // animals go crazy
+        scatterRandom();
         setTimeout(() => {
-            formLove();      // then line up to say LOVE
+            formPhrase();
         }, 700);
     }
 
-    // start everything when page loads
+    // start everything
     window.addEventListener('load', () => {
-        initAnimalParade();
+        initParade();
 
-        const btn = document.getElementById('formLoveBtn');
+        const btn = document.getElementById('formBtn');
         btn.addEventListener('click', handleButton);
-
-        // bonus: you can also click again to replay
     });
-
 })();
 </script>
 </body>
